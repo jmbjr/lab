@@ -6,7 +6,9 @@
       "quantity": 4,
       "unit_price": 1.39,
       "line_total": 5.56,
-      "currency": "USD"
+      "currency": "USD",
+      "photo": "images/TEA-1120.jpg",
+      "photo_status": "captured_pending_upload"
     },
     {
       "id": "TEA-5051",
@@ -14,7 +16,9 @@
       "quantity": 4,
       "unit_price": 1.39,
       "line_total": 5.56,
-      "currency": "USD"
+      "currency": "USD",
+      "photo": "images/TEA-5051.jpg",
+      "photo_status": "captured_pending_upload"
     },
     {
       "id": "VUPN2288",
@@ -22,7 +26,9 @@
       "quantity": 2,
       "unit_price": 2.99,
       "line_total": 5.98,
-      "currency": "USD"
+      "currency": "USD",
+      "photo": "images/VUPN2288.jpg",
+      "photo_status": "captured_pending_upload"
     },
     {
       "id": "VUPN2289",
@@ -30,7 +36,9 @@
       "quantity": 2,
       "unit_price": 2.99,
       "line_total": 5.98,
-      "currency": "USD"
+      "currency": "USD",
+      "photo": "images/VUPN2289.jpg",
+      "photo_status": "captured_pending_upload"
     },
     {
       "id": "CES-66-2421",
@@ -38,7 +46,9 @@
       "quantity": 1,
       "unit_price": 5.25,
       "line_total": 5.25,
-      "currency": "USD"
+      "currency": "USD",
+      "photo": "images/CES-66-2421.jpg",
+      "photo_status": "captured_pending_upload"
     },
     {
       "id": "TEA-6061",
@@ -46,7 +56,9 @@
       "quantity": 1,
       "unit_price": 4.95,
       "line_total": 4.95,
-      "currency": "USD"
+      "currency": "USD",
+      "photo": "images/TEA-6061.jpg",
+      "photo_status": "captured_pending_upload"
     },
     {
       "id": "TEA-4721",
@@ -54,7 +66,9 @@
       "quantity": 1,
       "unit_price": 4.95,
       "line_total": 4.95,
-      "currency": "USD"
+      "currency": "USD",
+      "photo": "images/TEA-4721.jpg",
+      "photo_status": "captured_pending_upload"
     },
     {
       "id": "TEA-4722",
@@ -62,7 +76,9 @@
       "quantity": 1,
       "unit_price": 4.95,
       "line_total": 4.95,
-      "currency": "USD"
+      "currency": "USD",
+      "photo": "images/TEA-4722.jpg",
+      "photo_status": "captured_pending_upload"
     }
   ]
 }
