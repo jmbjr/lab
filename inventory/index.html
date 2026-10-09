@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab Inventory</title>
+<style>
+:root{color-scheme:light dark;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+body{margin:0;background:Canvas;color:CanvasText}
+header{position:sticky;top:0;z-index:3;background:Canvas;border-bottom:1px solid color-mix(in srgb,CanvasText 18%,transparent);padding:1rem}
+.wrap{max-width:1200px;margin:auto}
+h1{margin:.1rem 0 .8rem;font-size:1.5rem}
+.controls{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+input,button{font:inherit;padding:.55rem .7rem;border:1px solid color-mix(in srgb,CanvasText 25%,transparent);border-radius:.5rem;background:Canvas;color:CanvasText}
+input[type=search]{min-width:18rem;flex:1}
+button{cursor:pointer}
+#columnsPanel{display:none;margin-top:.75rem;padding:.75rem;border:1px solid color-mix(in srgb,CanvasText 18%,transparent);border-radius:.6rem}
+#columnsPanel.open{display:block}
+.column-grid{display:flex;gap:.7rem 1rem;flex-wrap:wrap;margin-bottom:.7rem}
+label{display:flex;gap:.35rem;align-items:center}
+main{max-width:1200px;margin:1rem auto;padding:0 1rem}
+.meta{opacity:.7;margin-bottom:.6rem}
+.table-wrap{overflow:auto;border:1px solid color-mix(in srgb,CanvasText 18%,transparent);border-radius:.6rem}
+table{border-collapse:collapse;width:100%;min-width:720px}
+th,td{padding:.55rem .65rem;border-bottom:1px solid color-mix(in srgb,CanvasText 12%,transparent);text-align:left;vertical-align:middle}
+th{position:sticky;top:0;background:Canvas;z-index:1;white-space:nowrap}
+th.sortable{cursor:pointer}
+tr:last-child td{border-bottom:0}
+.filter-row input{width:100%;box-sizing:border-box;padding:.35rem .45rem}
+.thumb{width:72px;height:72px;object-fit:contain;border-radius:.35rem;background:#fff}
+.num{text-align:right}
+.small{font-size:.86rem;opacity:.75}
+.empty{text-align:center;padding:2rem}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Lab Inventory</h1>
+    <div class="controls">
+      <input id="globalFilter" type="search" placeholder="Filter all inventory…">
+      <button id="columnsBtn" type="button">Columns</button>
+      <button id="clearBtn" type="button">Clear filters</button>
+    </div>
+    <div id="columnsPanel">
+      <div id="columnChoices" class="column-grid"></div>
+      <div class="controls">
+        <button id="saveDefaultBtn" type="button">Save visible as default</button>
+        <button id="resetDefaultBtn" type="button">Reset defaults</button>
+      </div>
+      <div class="small" style="margin-top:.5rem">Column preferences are saved in this browser.</div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div id="meta" class="meta"></div>
+  <div class="table-wrap">
+    <table>
+      <thead id="thead"></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+const SITE_DEFAULT_COLUMNS = ["photo","id","description","quantity","unit_price","line_total"];
+const labels = {
+  id:"ID", description:"Description", quantity:"Qty", unit_price:"Unit price",
+  line_total:"Line total", currency:"Currency", photo:"Photo", photo_status:"Photo status"
+};
+const state = {
+  items:[], columns:[], visible:[], filters:{}, global:"",
+  sortKey:"description", sortDir:1
+};
+const savedDefaultsKey = "lab.inventory.defaultColumns.v1";
+
+const fmt = (key,val) => {
+  if (val == null) return "";
+  if (["unit_price","line_total"].includes(key) && typeof val === "number") return "$" + val.toFixed(2);
+  return String(val);
+};
+
+function deriveColumns(items){
+  const set = new Set();
+  items.forEach(item => Object.keys(item).forEach(k => set.add(k)));
+  const preferred = ["photo","id","description","quantity","unit_price","line_total","currency","photo_status"];
+  return [...preferred.filter(k=>set.has(k)), ...[...set].filter(k=>!preferred.includes(k)).sort()];
+}
+
+function loadDefaults(){
+  try {
+    const saved = JSON.parse(localStorage.getItem(savedDefaultsKey));
+    if (Array.isArray(saved)) return saved.filter(c=>state.columns.includes(c));
+  } catch {}
+  return SITE_DEFAULT_COLUMNS.filter(c=>state.columns.includes(c));
+}
+
+function renderColumnPanel(){
+  const box = document.getElementById("columnChoices");
+  box.innerHTML = "";
+  state.columns.forEach(col=>{
+    const label = document.createElement("label");
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = state.visible.includes(col);
+    cb.addEventListener("change", ()=>{
+      if(cb.checked && !state.visible.includes(col)) state.visible.push(col);
+      if(!cb.checked) state.visible = state.visible.filter(c=>c!==col);
+      render();
+    });
+    label.append(cb, document.createTextNode(labels[col] || col));
+    box.append(label);
+  });
+}
+
+function compare(a,b,key){
+  const av=a[key], bv=b[key];
+  if(av==null && bv==null) return 0;
+  if(av==null) return 1;
+  if(bv==null) return -1;
+  if(typeof av==="number" && typeof bv==="number") return av-bv;
+  return String(av).localeCompare(String(bv),undefined,{numeric:true,sensitivity:"base"});
+}
+
+function filteredItems(){
+  const g = state.global.trim().toLowerCase();
+  return state.items
+    .filter(item=>{
+      if(g && !Object.values(item).some(v=>String(v??"").toLowerCase().includes(g))) return false;
+      return Object.entries(state.filters).every(([k,v])=>{
+        if(!v) return true;
+        return String(item[k]??"").toLowerCase().includes(v.toLowerCase());
+      });
+    })
+    .sort((a,b)=>compare(a,b,state.sortKey)*state.sortDir);
+}
+
+function render(){
+  renderColumnPanel();
+  const thead=document.getElementById("thead"), tbody=document.getElementById("tbody");
+  thead.innerHTML=""; tbody.innerHTML="";
+  if(state.visible.length===0){
+    tbody.innerHTML='<tr><td class="empty">Choose at least one column.</td></tr>';
+    return;
+  }
+
+  const head=document.createElement("tr");
+  state.visible.forEach(col=>{
+    const th=document.createElement("th");
+    th.className="sortable";
+    th.textContent=(labels[col]||col) + (state.sortKey===col ? (state.sortDir===1?" ▲":" ▼") : "");
+    th.addEventListener("click",()=>{
+      if(state.sortKey===col) state.sortDir*=-1; else {state.sortKey=col; state.sortDir=1;}
+      render();
+    });
+    head.append(th);
+  });
+  thead.append(head);
+
+  const filters=document.createElement("tr");
+  filters.className="filter-row";
+  state.visible.forEach(col=>{
+    const th=document.createElement("th");
+    const inp=document.createElement("input");
+    inp.placeholder="Filter";
+    inp.value=state.filters[col]||"";
+    inp.addEventListener("input",()=>{state.filters[col]=inp.value; renderRows();});
+    th.append(inp); filters.append(th);
+  });
+  thead.append(filters);
+
+  renderRows();
+}
+
+function renderRows(){
+  const tbody=document.getElementById("tbody");
+  tbody.innerHTML="";
+  const rows=filteredItems();
+  document.getElementById("meta").textContent = rows.length + " of " + state.items.length + " items";
+  if(rows.length===0){
+    const tr=document.createElement("tr"), td=document.createElement("td");
+    td.colSpan=Math.max(1,state.visible.length); td.className="empty"; td.textContent="No matching inventory.";
+    tr.append(td); tbody.append(tr); return;
+  }
+  rows.forEach(item=>{
+    const tr=document.createElement("tr");
+    state.visible.forEach(col=>{
+      const td=document.createElement("td");
+      if(typeof item[col]==="number") td.classList.add("num");
+      if(col==="photo" && item[col]){
+        const img=document.createElement("img");
+        img.className="thumb"; img.loading="lazy"; img.src=item[col]; img.alt=item.description || item.id || "Inventory item";
+        td.append(img);
+      } else {
+        td.textContent=fmt(col,item[col]);
+      }
+      tr.append(td);
+    });
+    tbody.append(tr);
+  });
+}
+
+document.getElementById("globalFilter").addEventListener("input",e=>{state.global=e.target.value;renderRows();});
+document.getElementById("clearBtn").addEventListener("click",()=>{
+  state.global=""; state.filters={}; document.getElementById("globalFilter").value=""; render();
+});
+document.getElementById("columnsBtn").addEventListener("click",()=>document.getElementById("columnsPanel").classList.toggle("open"));
+document.getElementById("saveDefaultBtn").addEventListener("click",()=>localStorage.setItem(savedDefaultsKey,JSON.stringify(state.visible)));
+document.getElementById("resetDefaultBtn").addEventListener("click",()=>{
+  localStorage.removeItem(savedDefaultsKey);
+  state.visible=SITE_DEFAULT_COLUMNS.filter(c=>state.columns.includes(c));
+  render();
+});
+
+fetch("inventory.json")
+  .then(r=>{if(!r.ok) throw new Error("Could not load inventory.json"); return r.json();})
+  .then(data=>{
+    state.items = Array.isArray(data) ? data : (data.items || []);
+    state.columns = deriveColumns(state.items);
+    state.visible = loadDefaults();
+    render();
+  })
+  .catch(err=>{
+    document.getElementById("meta").textContent=err.message;
+    document.getElementById("tbody").innerHTML='<tr><td class="empty">Inventory failed to load.</td></tr>';
+  });
+</script>
+</body>
+</html>
