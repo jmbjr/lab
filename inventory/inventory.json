@@ -1,0 +1,68 @@
+{
+  "items": [
+    {
+      "id": "TEA-1120",
+      "description": "SPST miniature push button, momentary, green, N.O., 1A",
+      "quantity": 4,
+      "unit_price": 1.39,
+      "line_total": 5.56,
+      "currency": "USD"
+    },
+    {
+      "id": "TEA-5051",
+      "description": "SPST miniature push button, momentary, red, N.O., 1A",
+      "quantity": 4,
+      "unit_price": 1.39,
+      "line_total": 5.56,
+      "currency": "USD"
+    },
+    {
+      "id": "VUPN2288",
+      "description": "Stackable banana plug, red",
+      "quantity": 2,
+      "unit_price": 2.99,
+      "line_total": 5.98,
+      "currency": "USD"
+    },
+    {
+      "id": "VUPN2289",
+      "description": "Stackable banana plug, black",
+      "quantity": 2,
+      "unit_price": 2.99,
+      "line_total": 5.98,
+      "currency": "USD"
+    },
+    {
+      "id": "CES-66-2421",
+      "description": "SPST push button, momentary, N.O., 3A",
+      "quantity": 1,
+      "unit_price": 5.25,
+      "line_total": 5.25,
+      "currency": "USD"
+    },
+    {
+      "id": "TEA-6061",
+      "description": "White momentary push button switch, SPST ON-(OFF), 3A 250V AC, panel mount",
+      "quantity": 1,
+      "unit_price": 4.95,
+      "line_total": 4.95,
+      "currency": "USD"
+    },
+    {
+      "id": "TEA-4721",
+      "description": "Blue momentary push button switch, SPST ON-(OFF), 3A 250V AC, panel mount",
+      "quantity": 1,
+      "unit_price": 4.95,
+      "line_total": 4.95,
+      "currency": "USD"
+    },
+    {
+      "id": "TEA-4722",
+      "description": "Yellow momentary push button switch, SPST ON-(OFF), 3A 250V AC, panel mount",
+      "quantity": 1,
+      "unit_price": 4.95,
+      "line_total": 4.95,
+      "currency": "USD"
+    }
+  ]
+}
