@@ -79,6 +79,86 @@
       "currency": "USD",
       "photo": "images/TEA-4722.jpg",
       "photo_status": "available"
+    },
+    {
+      "id": "TEA-4719",
+      "description": "Green momentary push button switch, SPST (ON)-OFF, 3A 250V AC, panel mount",
+      "quantity": 1,
+      "unit_price": 4.95,
+      "line_total": 4.95,
+      "currency": "USD",
+      "photo": "images/TEA-4719.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "TEA-4720",
+      "description": "Black momentary push button switch, SPST (ON)-OFF, 3A 250V AC, panel mount",
+      "quantity": 1,
+      "unit_price": 4.95,
+      "line_total": 4.95,
+      "currency": "USD",
+      "photo": "images/TEA-4720.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "TEA-4718",
+      "description": "Red momentary push button switch, SPST (ON)-OFF, 3A 250V AC, panel mount",
+      "quantity": 1,
+      "unit_price": 4.95,
+      "line_total": 4.95,
+      "currency": "USD",
+      "photo": "images/TEA-4718.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "VUPN7963",
+      "description": "SPDT miniature slide switch, On-On (or Off), 0.3A",
+      "quantity": 4,
+      "unit_price": 1.99,
+      "line_total": 7.96,
+      "currency": "USD",
+      "photo": "images/VUPN7963.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "VUPN7964",
+      "description": "DPDT slide switch, On-On (or Off), 6A",
+      "quantity": 2,
+      "unit_price": 1.99,
+      "line_total": 3.98,
+      "currency": "USD",
+      "photo": "images/VUPN7964.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "PH-30-825B",
+      "description": "Philmore 30-825 SPST momentary handheld push button switch",
+      "quantity": 1,
+      "unit_price": 6.95,
+      "line_total": 6.95,
+      "currency": "USD",
+      "photo": "images/PH-30-825B.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "TEA-7873",
+      "description": "Rubber stick-on square feet bumper, black, 10.4mm x 2.5mm, 54-pack",
+      "quantity": 1,
+      "unit_price": 12.95,
+      "line_total": 12.95,
+      "currency": "USD",
+      "photo": "images/TEA-7873.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "RX7000",
+      "description": "Butane fuel, 10 oz (300 mL)",
+      "quantity": 1,
+      "unit_price": 12.99,
+      "line_total": 12.99,
+      "currency": "USD",
+      "photo": "images/RX7000.jpg",
+      "photo_status": "available"
     }
   ]
 }
