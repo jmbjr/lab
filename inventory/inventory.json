@@ -168,7 +168,7 @@
       "line_total": 18.95,
       "currency": "USD",
       "photo": "images/SON-MZ193L.jpg",
-      "photo_status": "awaiting_photo"
+      "photo_status": "available"
     },
     {
       "id": "VUPN7191",
@@ -178,7 +178,7 @@
       "line_total": 6.49,
       "currency": "USD",
       "photo": "images/VUPN7191.jpg",
-      "photo_status": "awaiting_photo"
+      "photo_status": "available"
     },
     {
       "id": "VUPN6669",
@@ -188,7 +188,7 @@
       "line_total": 10.54,
       "currency": "USD",
       "photo": "images/VUPN6669.jpg",
-      "photo_status": "awaiting_photo"
+      "photo_status": "available"
     },
     {
       "id": "VUPN2540",
@@ -198,7 +198,7 @@
       "line_total": 33.98,
       "currency": "USD",
       "photo": "images/VUPN2540.jpg",
-      "photo_status": "awaiting_photo"
+      "photo_status": "available"
     },
     {
       "id": "425-NS",
@@ -208,7 +208,7 @@
       "line_total": 4.95,
       "currency": "USD",
       "photo": "images/425-NS.jpg",
-      "photo_status": "awaiting_photo"
+      "photo_status": "available"
     },
     {
       "id": "EL-TL-12",
@@ -218,7 +218,7 @@
       "line_total": 16.95,
       "currency": "USD",
       "photo": "images/EL-TL-12.jpg",
-      "photo_status": "awaiting_photo"
+      "photo_status": "available"
     },
     {
       "id": "PH-78-12210",
@@ -228,7 +228,7 @@
       "line_total": 5.72,
       "currency": "USD",
       "photo": "images/PH-78-12210.jpg",
-      "photo_status": "awaiting_photo"
+      "photo_status": "available"
     },
     {
       "id": "PH-78-12212",
@@ -238,7 +238,7 @@
       "line_total": 5.72,
       "currency": "USD",
       "photo": "images/PH-78-12212.jpg",
-      "photo_status": "awaiting_photo"
+      "photo_status": "available"
     }
   ]
 }
