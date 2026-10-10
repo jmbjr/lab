@@ -159,6 +159,86 @@
       "currency": "USD",
       "photo": "images/RX7000.jpg",
       "photo_status": "available"
+    },
+    {
+      "id": "SON-MZ193L",
+      "description": "Illuminated helping hand with magnifier and soldering iron holder",
+      "quantity": 1,
+      "unit_price": 18.95,
+      "line_total": 18.95,
+      "currency": "USD",
+      "photo": "images/SON-MZ193L.jpg",
+      "photo_status": "awaiting_photo"
+    },
+    {
+      "id": "VUPN7191",
+      "description": "Breadboard power module",
+      "quantity": 1,
+      "unit_price": 6.49,
+      "line_total": 6.49,
+      "currency": "USD",
+      "photo": "images/VUPN7191.jpg",
+      "photo_status": "awaiting_photo"
+    },
+    {
+      "id": "VUPN6669",
+      "description": "400-point breadboard",
+      "quantity": 2,
+      "unit_price": 5.27,
+      "line_total": 10.54,
+      "currency": "USD",
+      "photo": "images/VUPN6669.jpg",
+      "photo_status": "awaiting_photo"
+    },
+    {
+      "id": "VUPN2540",
+      "description": "840-point breadboard, white",
+      "quantity": 2,
+      "unit_price": 16.99,
+      "line_total": 33.98,
+      "currency": "USD",
+      "photo": "images/VUPN2540.jpg",
+      "photo_status": "awaiting_photo"
+    },
+    {
+      "id": "425-NS",
+      "description": "MG No Clean Super Wick, .075 in, 5 ft",
+      "quantity": 1,
+      "unit_price": 4.95,
+      "line_total": 4.95,
+      "currency": "USD",
+      "photo": "images/425-NS.jpg",
+      "photo_status": "awaiting_photo"
+    },
+    {
+      "id": "EL-TL-12",
+      "description": "Banana to minigrabber test leads, 36 in",
+      "quantity": 1,
+      "unit_price": 16.95,
+      "line_total": 16.95,
+      "currency": "USD",
+      "photo": "images/EL-TL-12.jpg",
+      "photo_status": "awaiting_photo"
+    },
+    {
+      "id": "PH-78-12210",
+      "description": "Hookup wire, solid, 22 gauge, 300V, 25 ft, black",
+      "quantity": 1,
+      "unit_price": 5.72,
+      "line_total": 5.72,
+      "currency": "USD",
+      "photo": "images/PH-78-12210.jpg",
+      "photo_status": "awaiting_photo"
+    },
+    {
+      "id": "PH-78-12212",
+      "description": "Hookup wire, solid, 22 gauge, 300V, 25 ft, red",
+      "quantity": 1,
+      "unit_price": 5.72,
+      "line_total": 5.72,
+      "currency": "USD",
+      "photo": "images/PH-78-12212.jpg",
+      "photo_status": "awaiting_photo"
     }
   ]
 }
