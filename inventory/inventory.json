@@ -239,6 +239,86 @@
       "currency": "USD",
       "photo": "images/PH-78-12212.jpg",
       "photo_status": "available"
+    },
+    {
+      "id": "PH-78-12218",
+      "description": "Hookup wire, solid, 22 gauge, 300V, 25 ft, gray",
+      "quantity": 1,
+      "unit_price": 5.72,
+      "line_total": 5.72,
+      "currency": "USD",
+      "photo": "images/PH-78-12218.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "VUPN2673",
+      "description": "1000uF 16 Volt electrolytic capacitor",
+      "quantity": 2,
+      "unit_price": 2.6,
+      "line_total": 5.2,
+      "currency": "USD",
+      "photo": "images/VUPN2673.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "VUPN2895",
+      "description": "470uF 16 Volt electrolytic capacitor",
+      "quantity": 2,
+      "unit_price": 1.55,
+      "line_total": 3.1,
+      "currency": "USD",
+      "photo": "images/VUPN2895.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "VUPN2662",
+      "description": "470uF 25 Volt electrolytic capacitor",
+      "quantity": 2,
+      "unit_price": 1.95,
+      "line_total": 3.9,
+      "currency": "USD",
+      "photo": "images/VUPN2662.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "VUPN2642",
+      "description": "100uF 16 Volt electrolytic capacitor",
+      "quantity": 3,
+      "unit_price": 0.75,
+      "line_total": 2.25,
+      "currency": "USD",
+      "photo": "images/VUPN2642.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "VUPN2868",
+      "description": "100uF 25 Volt electrolytic capacitor",
+      "quantity": 3,
+      "unit_price": 0.8,
+      "line_total": 2.4,
+      "currency": "USD",
+      "photo": "images/VUPN2868.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "VUPN2614",
+      "description": "10uF 16 Volt electrolytic capacitor",
+      "quantity": 3,
+      "unit_price": 0.6,
+      "line_total": 1.8,
+      "currency": "USD",
+      "photo": "images/VUPN2614.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "VUPN2615",
+      "description": "10uF 25 Volt electrolytic capacitor",
+      "quantity": 3,
+      "unit_price": 0.65,
+      "line_total": 1.95,
+      "currency": "USD",
+      "photo": "images/VUPN2615.jpg",
+      "photo_status": "available"
     }
   ]
 }
