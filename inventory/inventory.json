@@ -319,6 +319,76 @@
       "currency": "USD",
       "photo": "images/VUPN2615.jpg",
       "photo_status": "available"
+    },
+    {
+      "id": "VUPN2171",
+      "description": "ESP32 Development Board ESP-WROOM-32 (D67)",
+      "quantity": 4,
+      "unit_price": 10.95,
+      "line_total": 43.8,
+      "currency": "USD",
+      "photo": "images/VUPN2171.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "VUPN1586",
+      "description": "DFPlayer Mini MP3 Module with MicroSD Card Slot for Arduino (D133)",
+      "quantity": 1,
+      "unit_price": 6.95,
+      "line_total": 6.95,
+      "currency": "USD",
+      "photo": "images/VUPN1586.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "VUPN7790",
+      "description": "DC-DC Adjustable Step-Up Boost Module, 5-35VDC output @ 2A (D89)",
+      "quantity": 1,
+      "unit_price": 6.95,
+      "line_total": 6.95,
+      "currency": "USD",
+      "photo": "images/VUPN7790.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "VUPN2529",
+      "description": "ESP32 Prototyping Expansion Board - For Wroom Only (D7)",
+      "quantity": 1,
+      "unit_price": 9.95,
+      "line_total": 9.95,
+      "currency": "USD",
+      "photo": "images/VUPN2529.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "VUPN8407",
+      "description": "DRV8825 Stepper Motor Driver Module (D104)",
+      "quantity": 1,
+      "unit_price": 9.79,
+      "line_total": 9.79,
+      "currency": "USD",
+      "photo": "images/VUPN8407.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "PCF8574P",
+      "description": "I2C I/O Expander, PCF8574P",
+      "quantity": 2,
+      "unit_price": 2.79,
+      "line_total": 5.58,
+      "currency": "USD",
+      "photo": "images/PCF8574P.jpg",
+      "photo_status": "available"
+    },
+    {
+      "id": "VUPN7407",
+      "description": "DC-DC Adjustable Step-Down Voltage Regulator Module, 1.5-35VDC output @ 2A (D93)",
+      "quantity": 2,
+      "unit_price": 6.95,
+      "line_total": 13.9,
+      "currency": "USD",
+      "photo": "images/VUPN7407.jpg",
+      "photo_status": "available"
     }
   ]
 }
