@@ -1,0 +1,506 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "id": "TODO-001",
+    "title": "Wireless microphone mod for ON M45 speaker",
+    "slug": "wireless-mic-mod",
+    "status": "todo",
+    "phase": "define",
+    "iteration": 1,
+    "objective": "Identify and prove a usable audio interface inside the wireless karaoke microphone, then reproduce intelligible microphone audio through the ON M45 AUX input without modifying the speaker.",
+    "created_at": "2026-10-25",
+    "updated_at": "2026-10-25",
+    "current_node_ids": [
+      "STEP-001"
+    ],
+    "entry_node_ids": [
+      "INFO-001",
+      "INFO-002",
+      "INFO-003"
+    ],
+    "terminal_node_ids": [
+      "DEC-004",
+      "STEP-006C"
+    ],
+    "iteration_exit_criteria": [
+      "Major microphone functional blocks are documented well enough to explain the signal path.",
+      "At least one usable audio interface is identified and electrically characterized.",
+      "Microphone audio is reproduced intelligibly through the ON M45 AUX input.",
+      "The effect of microphone controls/DSP on the chosen interface is understood.",
+      "There is enough evidence to select the Iteration 2 wireless architecture."
+    ],
+    "out_of_scope_for_iteration": [
+      "Final wireless bridge implementation",
+      "Final enclosure",
+      "Battery integration for a replacement transmitter",
+      "Full reverse engineering of the existing RF protocol",
+      "Permanent modification of the ON M45 speaker"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "INFO-001",
+      "kind": "info",
+      "title": "RF discovery conclusion",
+      "status": "done",
+      "summary": "The microphone is a confirmed 2.4 GHz transmitter. Its activity is state-correlated and distributed across separated parts of the 2.4 GHz ISM band. It does not appear as an ordinary pairable Bluetooth audio device. Exact protocol remains unresolved and is not the Iteration 1 critical path.",
+      "upstream": [],
+      "downstream": [
+        "STEP-001"
+      ]
+    },
+    {
+      "id": "INFO-002",
+      "kind": "info",
+      "title": "Speaker-side constraint",
+      "status": "done",
+      "summary": "The ON M45 already provides a 3.5 mm AUX input, so Iteration 1 should treat the speaker as a solved analog output endpoint and avoid opening or modifying it.",
+      "upstream": [],
+      "downstream": [
+        "STEP-001"
+      ]
+    },
+    {
+      "id": "INFO-003",
+      "kind": "info",
+      "title": "Iteration 1 architectural principle",
+      "status": "done",
+      "summary": "Do not make RF protocol decoding the main task. Find the latest practical audio interface before wireless transmission: prefer post-DSP analog, then processed digital audio, then pre-DSP/raw microphone audio.",
+      "upstream": [],
+      "downstream": [
+        "STEP-001"
+      ]
+    },
+    {
+      "id": "STEP-001",
+      "kind": "step",
+      "title": "Open microphone non-destructively",
+      "status": "ready",
+      "summary": "Open the microphone without cutting traces, removing components, or soldering.",
+      "acceptance_criteria": [
+        "Enclosure is open with PCB(s), battery, microphone capsule, controls, and antenna area accessible.",
+        "No intentional electrical modification has been made."
+      ],
+      "outputs": [
+        "Accessible hardware for documentation"
+      ],
+      "upstream": [
+        "INFO-001",
+        "INFO-002",
+        "INFO-003"
+      ],
+      "downstream": [
+        "STEP-002"
+      ]
+    },
+    {
+      "id": "STEP-002",
+      "kind": "step",
+      "title": "Document hardware",
+      "status": "pending",
+      "summary": "Photograph and record the complete hardware before probing.",
+      "acceptance_criteria": [
+        "Clear images of both sides of every PCB are captured.",
+        "All readable IC, crystal, regulator, battery, connector, and board markings are recorded.",
+        "Microphone capsule wiring, antenna/RF area, charging circuitry, controls, and test pads are visible."
+      ],
+      "outputs": [
+        "PCB photo set",
+        "Component-marking list"
+      ],
+      "upstream": [
+        "STEP-001"
+      ],
+      "downstream": [
+        "STEP-003",
+        "STEP-004"
+      ]
+    },
+    {
+      "id": "STEP-003",
+      "kind": "step",
+      "title": "Identify parts and functional blocks",
+      "status": "pending",
+      "summary": "Use markings, layout, continuity, and available documentation to map the major functional blocks.",
+      "acceptance_criteria": [
+        "Ground and battery connections are identified.",
+        "Likely power regulation, charging, microphone front end, DSP/control, RF, and antenna regions are identified.",
+        "Candidate IC functions are recorded with confidence/uncertainty."
+      ],
+      "outputs": [
+        "Functional-block map",
+        "Part-identification notes"
+      ],
+      "upstream": [
+        "STEP-002"
+      ],
+      "downstream": [
+        "DEC-001"
+      ]
+    },
+    {
+      "id": "STEP-004",
+      "kind": "step",
+      "title": "Trace microphone signal path",
+      "status": "pending",
+      "summary": "Trace from the microphone capsule toward processing and the RF section using visual inspection and continuity measurements before powered probing.",
+      "acceptance_criteria": [
+        "Microphone capsule pins and ground/reference are identified.",
+        "At least one plausible downstream audio-path node or bus is identified.",
+        "Candidate test points are documented before powered measurements."
+      ],
+      "outputs": [
+        "Preliminary signal-flow diagram",
+        "Candidate probe points"
+      ],
+      "upstream": [
+        "STEP-002"
+      ],
+      "downstream": [
+        "DEC-001"
+      ]
+    },
+    {
+      "id": "DEC-001",
+      "kind": "decision",
+      "title": "Choose first audio interface to characterize",
+      "status": "pending",
+      "question": "Which accessible audio-interface candidate should be characterized first?",
+      "decision_rule": "Choose the highest-priority credible candidate: post-DSP analog > processed digital audio > pre-DSP/raw analog. If no credible candidate exists, resolve that blocker first.",
+      "options": [
+        {
+          "id": "OPT-001A",
+          "label": "Post-DSP analog candidate exists",
+          "next_node_ids": [
+            "STEP-005A"
+          ]
+        },
+        {
+          "id": "OPT-001B",
+          "label": "Processed digital audio candidate exists",
+          "next_node_ids": [
+            "STEP-005B"
+          ]
+        },
+        {
+          "id": "OPT-001C",
+          "label": "Only pre-DSP/raw analog candidate is practical",
+          "next_node_ids": [
+            "STEP-005C"
+          ]
+        },
+        {
+          "id": "OPT-001D",
+          "label": "No credible audio interface identified yet",
+          "next_node_ids": [
+            "STEP-005D"
+          ]
+        }
+      ],
+      "selected_option_id": null,
+      "upstream": [
+        "STEP-003",
+        "STEP-004"
+      ],
+      "downstream": [
+        "STEP-005A",
+        "STEP-005B",
+        "STEP-005C",
+        "STEP-005D"
+      ]
+    },
+    {
+      "id": "STEP-005A",
+      "kind": "step",
+      "title": "Characterize post-DSP analog candidate",
+      "status": "pending",
+      "summary": "Measure the candidate analog signal while speaking and operating microphone controls.",
+      "acceptance_criteria": [
+        "DC bias and approximate AC amplitude are measured.",
+        "Response to speech is observed.",
+        "Effects/volume/mute influence is recorded.",
+        "The node is judged safe or unsafe for a buffered/conditioned AUX prototype."
+      ],
+      "outputs": [
+        "Analog signal characterization"
+      ],
+      "upstream": [
+        "DEC-001"
+      ],
+      "downstream": [
+        "DEC-002"
+      ]
+    },
+    {
+      "id": "STEP-005B",
+      "kind": "step",
+      "title": "Characterize processed digital audio candidate",
+      "status": "pending",
+      "summary": "Determine whether the candidate bus is plausibly I2S, PCM, or another digital audio interface and characterize its basic signaling.",
+      "acceptance_criteria": [
+        "Signal voltage levels and line roles are estimated or identified.",
+        "Clock/data behavior is observed if suitable test equipment is available.",
+        "A practical method to convert or capture the bus for an AUX proof is identified."
+      ],
+      "outputs": [
+        "Digital audio bus characterization"
+      ],
+      "upstream": [
+        "DEC-001"
+      ],
+      "downstream": [
+        "DEC-002"
+      ]
+    },
+    {
+      "id": "STEP-005C",
+      "kind": "step",
+      "title": "Characterize pre-DSP analog candidate",
+      "status": "pending",
+      "summary": "Measure the raw/pre-DSP microphone signal and determine what amplification or buffering is needed.",
+      "acceptance_criteria": [
+        "DC bias and approximate AC amplitude are measured.",
+        "Response to speech is observed.",
+        "Required gain/buffering for a line-level proof is estimated."
+      ],
+      "outputs": [
+        "Raw analog signal characterization"
+      ],
+      "upstream": [
+        "DEC-001"
+      ],
+      "downstream": [
+        "DEC-002"
+      ]
+    },
+    {
+      "id": "STEP-005D",
+      "kind": "step",
+      "title": "Resolve unknown interface",
+      "status": "pending",
+      "summary": "Perform targeted part research and additional tracing/probing only far enough to produce at least one credible audio-interface candidate.",
+      "acceptance_criteria": [
+        "A new candidate interface is documented, or a specific blocker is documented with the next required instrument/component."
+      ],
+      "outputs": [
+        "Resolved candidate or explicit blocker"
+      ],
+      "upstream": [
+        "DEC-001"
+      ],
+      "downstream": [
+        "DEC-002"
+      ]
+    },
+    {
+      "id": "DEC-002",
+      "kind": "decision",
+      "title": "Select Iteration 1 proof interface",
+      "status": "pending",
+      "dependency_mode": "any",
+      "question": "Which characterized interface should be used for the first wired audio proof?",
+      "decision_rule": "Choose the highest-priority interface that is understood well enough to connect safely: post-DSP analog > processed digital > pre-DSP analog.",
+      "options": [
+        {
+          "id": "OPT-002A",
+          "label": "Use characterized analog interface",
+          "next_node_ids": [
+            "STEP-006A"
+          ]
+        },
+        {
+          "id": "OPT-002B",
+          "label": "Use characterized digital interface with conversion",
+          "next_node_ids": [
+            "STEP-006B"
+          ]
+        },
+        {
+          "id": "OPT-002C",
+          "label": "Insufficient characterization; define a targeted follow-on node",
+          "next_node_ids": [
+            "STEP-006C"
+          ]
+        }
+      ],
+      "selected_option_id": null,
+      "upstream": [
+        "STEP-005A",
+        "STEP-005B",
+        "STEP-005C",
+        "STEP-005D"
+      ],
+      "downstream": [
+        "STEP-006A",
+        "STEP-006B",
+        "STEP-006C"
+      ]
+    },
+    {
+      "id": "STEP-006A",
+      "kind": "step",
+      "title": "Build analog conditioning path",
+      "status": "pending",
+      "summary": "Create the minimum safe buffer/gain/attenuation/coupling needed to feed the selected analog signal toward the M45 AUX input.",
+      "acceptance_criteria": [
+        "Conditioning approach is documented.",
+        "Expected output level and DC isolation are checked before connection to M45."
+      ],
+      "outputs": [
+        "Temporary analog interface circuit"
+      ],
+      "upstream": [
+        "DEC-002"
+      ],
+      "downstream": [
+        "STEP-007"
+      ]
+    },
+    {
+      "id": "STEP-006B",
+      "kind": "step",
+      "title": "Build digital-to-analog proof path",
+      "status": "pending",
+      "summary": "Use available or acquired conversion hardware to turn the selected digital audio interface into a safe analog signal for M45 AUX.",
+      "acceptance_criteria": [
+        "Digital stream is captured/converted well enough to produce analog audio.",
+        "Analog output is checked for safe level and DC behavior."
+      ],
+      "outputs": [
+        "Temporary digital-audio conversion path"
+      ],
+      "upstream": [
+        "DEC-002"
+      ],
+      "downstream": [
+        "STEP-007"
+      ]
+    },
+    {
+      "id": "STEP-006C",
+      "kind": "step",
+      "title": "Record Iteration 1 blocker and extend roadmap",
+      "status": "pending",
+      "summary": "If no interface is yet safe enough for a proof, record the precise blocker and add new DAG nodes rather than forcing a connection.",
+      "acceptance_criteria": [
+        "Blocker is specific and evidence-based.",
+        "Required next measurement, tool, component, or research task is represented by new node(s) in todo.json."
+      ],
+      "outputs": [
+        "Updated roadmap with targeted follow-on work"
+      ],
+      "upstream": [
+        "DEC-002"
+      ],
+      "downstream": []
+    },
+    {
+      "id": "STEP-007",
+      "kind": "step",
+      "title": "Run wired M45 AUX proof",
+      "status": "pending",
+      "dependency_mode": "any",
+      "summary": "Connect the conditioned/converted microphone audio to the ON M45 AUX input and test live speech.",
+      "acceptance_criteria": [
+        "Intelligible live microphone audio is reproduced through the M45.",
+        "No unsafe heating, clipping, DC behavior, or obvious electrical fault occurs."
+      ],
+      "outputs": [
+        "Working wired proof or documented failure"
+      ],
+      "upstream": [
+        "STEP-006A",
+        "STEP-006B"
+      ],
+      "downstream": [
+        "STEP-008"
+      ]
+    },
+    {
+      "id": "STEP-008",
+      "kind": "step",
+      "title": "Evaluate audio and control behavior",
+      "status": "pending",
+      "summary": "Characterize the successful proof well enough to judge it as the Iteration 1 interface.",
+      "acceptance_criteria": [
+        "Intelligibility/noise is assessed.",
+        "Available level is assessed.",
+        "Volume, echo/effects, and mute behavior at the selected tap are recorded.",
+        "The microphone still operates normally enough for continued development."
+      ],
+      "outputs": [
+        "Iteration 1 interface evaluation"
+      ],
+      "upstream": [
+        "STEP-007"
+      ],
+      "downstream": [
+        "DEC-003"
+      ]
+    },
+    {
+      "id": "DEC-003",
+      "kind": "decision",
+      "title": "Iteration 1 exit readiness",
+      "status": "pending",
+      "question": "Have all Iteration 1 exit criteria been demonstrated?",
+      "decision_rule": "Answer yes only when architecture, usable interface, wired M45 proof, control behavior, and Iteration 2 decision inputs are all documented.",
+      "options": [
+        {
+          "id": "OPT-003A",
+          "label": "Yes; select Iteration 2 architecture",
+          "next_node_ids": [
+            "DEC-004"
+          ]
+        },
+        {
+          "id": "OPT-003B",
+          "label": "No; add explicit missing-work nodes to this DAG",
+          "next_node_ids": []
+        }
+      ],
+      "selected_option_id": null,
+      "upstream": [
+        "STEP-008"
+      ],
+      "downstream": [
+        "DEC-004"
+      ]
+    },
+    {
+      "id": "DEC-004",
+      "kind": "decision",
+      "title": "Select Iteration 2 wireless architecture",
+      "status": "pending",
+      "question": "Which wireless architecture should follow the proven audio interface?",
+      "decision_rule": "Use teardown findings, interface type, latency needs, preservation of effects, available inventory, and implementation effort.",
+      "options": [
+        {
+          "id": "OPT-004A",
+          "label": "Preserve original wireless system / compatible receiver",
+          "next_node_ids": []
+        },
+        {
+          "id": "OPT-004B",
+          "label": "Replace link with custom low-latency wireless bridge",
+          "next_node_ids": []
+        },
+        {
+          "id": "OPT-004C",
+          "label": "Use Bluetooth bridge if measured latency is acceptable",
+          "next_node_ids": []
+        },
+        {
+          "id": "OPT-004D",
+          "label": "Choose another architecture revealed by teardown",
+          "next_node_ids": []
+        }
+      ],
+      "selected_option_id": null,
+      "upstream": [
+        "DEC-003"
+      ],
+      "downstream": []
+    }
+  ]
+}
