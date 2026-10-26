@@ -11,7 +11,7 @@
     "created_at": "2026-10-25",
     "updated_at": "2026-10-25",
     "current_node_ids": [
-      "STEP-001"
+      "STEP-004"
     ],
     "entry_node_ids": [
       "INFO-001",
@@ -97,7 +97,7 @@
       "id": "STEP-002",
       "kind": "step",
       "title": "Document hardware",
-      "status": "pending",
+      "status": "done",
       "summary": "Photograph and record the complete hardware before probing.",
       "acceptance_criteria": [
         "Clear images of both sides of every PCB are captured.",
@@ -105,8 +105,8 @@
         "Microphone capsule wiring, antenna/RF area, charging circuitry, controls, and test pads are visible."
       ],
       "outputs": [
-        "PCB photo set",
-        "Component-marking list"
+        "PCB photo set captured with the internal sled removed and both PCB faces visible.",
+        "Connector/component markings documented, including M+/M- microphone connector, B+/B- battery connector, CL4054H charger marking, 24.000 MHz crystal, AC7006-family/JL SoC area, USB-C, PCB antenna, buttons, LEDs/test pads."
       ],
       "upstream": [
         "STEP-001"
@@ -120,16 +120,20 @@
       "id": "STEP-003",
       "kind": "step",
       "title": "Identify parts and functional blocks",
-      "status": "pending",
-      "summary": "Use markings, layout, continuity, and available documentation to map the major functional blocks.",
+      "status": "done",
+      "summary": "Major functional blocks are identified. The exact JieLi AC7006 suffix/package remains unresolved, so later probing will use board continuity rather than an assumed variant pinout.",
       "acceptance_criteria": [
         "Ground and battery connections are identified.",
         "Likely power regulation, charging, microphone front end, DSP/control, RF, and antenna regions are identified.",
         "Candidate IC functions are recorded with confidence/uncertainty."
       ],
       "outputs": [
-        "Functional-block map",
-        "Part-identification notes"
+        "Main SoC: JieLi/Jerry AC7006 family (confirmed family; exact suffix/package unresolved).",
+        "RF block: integrated AC7006-family radio beside a 24.000 MHz crystal feeding a meandered PCB antenna marked ANT-BLE.",
+        "Charging block: USB-C 5 V input and CL4054H single-cell Li-ion charger feeding the B+/B- battery path.",
+        "Audio input block: two-wire microphone capsule on the white M+/M- connector; likely microphone analog front end is integrated in or immediately adjacent to the AC7006-family SoC.",
+        "User-interface block: four tactile switches plus LED/status circuitry routed to the main SoC.",
+        "Known uncertainty: publicly located AC7006D documentation is a different 32-pin variant, so its pin numbers must not be applied directly to this board."
       ],
       "upstream": [
         "STEP-002"
@@ -142,7 +146,7 @@
       "id": "STEP-004",
       "kind": "step",
       "title": "Trace microphone signal path",
-      "status": "pending",
+      "status": "ready",
       "summary": "Trace from the microphone capsule toward processing and the RF section using visual inspection and continuity measurements before powered probing.",
       "acceptance_criteria": [
         "Microphone capsule pins and ground/reference are identified.",
