@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0",
+  "status": "partial_measured",
+  "board": "VIM-V1.1 (20240525 silkscreen)",
+  "device": "Wireless karaoke microphone",
+  "notes": [
+    "Measurements performed with the Li-ion battery disconnected; ground reference was the battery B− contact verified continuous with USB-C shell.",
+    "M− to ground measured approximately 35 MΩ; M+ to ground approximately 2.1 kΩ while unpowered. Meter readings are not independent resistor-value measurements.",
+    "Continuity indicates connector M− is on the same net as one end of R1L and C1L; M+ is on the same net as one end of R1R and C1R.",
+    "The other R1L terminal joins C0 terminal 2. The other R1R terminal joins C0 terminal 1 AND verified ground. Do not reinterpret C0 as bridging two floating differential lines.",
+    "The non-M+ side of C1R leads to a nearby capacitor, vias and an accessible JieLi chip contact. We call that contact JL-A until the exact pinout is available.",
+    "The non-M− side of C1L has not been fully traced. Small-component values and the exact AC7006 variant remain unknown.",
+    "Net names and arbitrary terminal indices in this JSON are reverse-engineering labels, not manufacturer pin identifiers; the drawing is not proof of the IC's internal audio architecture."
+  ],
+  "nets": [
+    {
+      "name": "M_PLUS",
+      "connections": [
+        "white microphone connector M+",
+        "R1R.1",
+        "C1R.1"
+      ],
+      "notes": "No direct continuity to B−; ~2.1 kΩ to ground (unpowered meter reading)."
+    },
+    {
+      "name": "M_MINUS",
+      "connections": [
+        "white microphone connector M−",
+        "R1L.1",
+        "C1L.1"
+      ],
+      "notes": "No direct continuity to B−; ~35 MΩ to ground (unpowered meter reading)."
+    },
+    {
+      "name": "GND",
+      "connections": [
+        "battery B−",
+        "USB-C metal shell",
+        "R1R.2",
+        "C0.1"
+      ],
+      "notes": "Ground reference confirmed by continuity."
+    },
+    {
+      "name": "NET_X",
+      "connections": [
+        "R1L.2",
+        "C0.2"
+      ],
+      "notes": "Observed joined node, downstream unidentified."
+    },
+    {
+      "name": "NET_C1R_OUT",
+      "connections": [
+        "C1R.2",
+        "JL-A accessible SoC contact",
+        "nearby capacitor terminal",
+        "vias"
+      ],
+      "notes": "JL-A is provisional and has no manufacturer pin number yet."
+    },
+    {
+      "name": "NET_C1L_OUT",
+      "connections": [
+        "C1L.2"
+      ],
+      "notes": "Downstream unknown; requires additional tracing."
+    }
+  ],
+  "components": [
+    {
+      "ref": "R1L",
+      "type": "resistor",
+      "value": null,
+      "pins": {
+        "1": "M_MINUS",
+        "2": "NET_X"
+      }
+    },
+    {
+      "ref": "R1R",
+      "type": "resistor",
+      "value": null,
+      "pins": {
+        "1": "M_PLUS",
+        "2": "GND"
+      }
+    },
+    {
+      "ref": "C0",
+      "type": "capacitor",
+      "value": null,
+      "pins": {
+        "1": "GND",
+        "2": "NET_X"
+      }
+    },
+    {
+      "ref": "C1L",
+      "type": "capacitor",
+      "value": null,
+      "pins": {
+        "1": "M_MINUS",
+        "2": "NET_C1L_OUT"
+      }
+    },
+    {
+      "ref": "C1R",
+      "type": "capacitor",
+      "value": null,
+      "pins": {
+        "1": "M_PLUS",
+        "2": "NET_C1R_OUT"
+      }
+    }
+  ]
+}
