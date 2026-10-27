@@ -34,6 +34,18 @@ The wireless-mic project includes **U1: a provisional JieLi chip symbol**, a sep
 
 The AC7006D 32-pin datasheet and the AC7066M wireless-microphone reference schematic are **related-design references only**; neither establishes the target chip's exact pinout. The observed connectivity and CircuitJS1 simulation remain separate.
 
+## Guided bench-work workflow
+
+Each selected EWorkbench project may provide a `roadmapData` path relative to `eworkbench/`. For TODO-001 that points to the **existing** `projects/todo/TODO-001/todo.json`, which the Pages workflow publishes alongside EWorkbench as `/lab/projects/todo/TODO-001/todo.json`. Updating the project tracker on `main` triggers a Pages rebuild, so the website displays the current tracker after deployment. It does **not** mark steps complete by itself.
+
+The page includes a native collapsible **"How to use and update schematics"** accordion. The **Current roadmap** section shows the objective, completed-count, active DAG node(s), acceptance criteria, concrete `benchGuides` when configured, suggested schematic links, and an expandable list of all steps/decisions. Roadmap status and task descriptions come from `todo.json`; project-specific measurement tips and suggested schematics come from `project.json`.
+
+**Practical loop:** open EWorkbench → select current project's observed schematic → follow the current bench actions with power safely disconnected when probing continuity → enter results in **Field notes** → select **Copy update for ChatGPT** → paste in our project chat and attach photos or exported .txt circuit as appropriate. The pasted update includes project, step, schematic, notes, and workbench URL.
+
+Field notes are stored only in browser `localStorage` under project and step keys. They are **not sent to ChatGPT**, uploaded, committed to GitHub, or shared across devices until you manually paste them. If clipboard permission is unavailable, the page presents the entire composed message in a selectable text area. Clicking **Clear notes** deletes only the local draft after confirmation.
+
+**Observed schematics** (SVG and measured-netlist JSON) are read-only on the page. For now, posting measurements here lets us incorporate verified changes through GitHub PRs. **Simulation schematics** can be edited in CircuitJS1, stored as local drafts, and downloaded as .txt files. Their assumed values must not be confused with measured board data.
+
 ## Editing and saving
 
 CircuitJS1 is embedded in a same-origin iframe. The workbench uses the documented `importCircuit` / `exportCircuit` API and native simulator editing. A user can:
