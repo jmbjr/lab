@@ -46,6 +46,18 @@ jobs:
           cache: npm
           cache-dependency-path: _circuitjs_source/ts/package-lock.json
 
+      - name: Disable optional upstream third-party widget
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("_circuitjs_source/ts/circuitjs.html")
+          # The optional Dropbox widget is not needed for local draft/export.
+          # Upstream's root-scoped manifest is inappropriate under /lab/.
+          p.write_text("\\n".join(line for line in p.read_text().splitlines()
+            if 'dropbox.com/static/api/2/dropins.js' not in line
+            and 'href="/circuit/manifest.json"' not in line) + "\\n")
+          PY
+
       - name: Build CircuitJS1
         working-directory: _circuitjs_source/ts
         run: |
