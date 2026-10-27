@@ -4,7 +4,7 @@ const root = new URL("./", document.baseURI);
 const $ = id => document.getElementById(id);
 const state = {
   catalog: [], project: null, schematic: null, simulator: null,
-  repositoryModel: "", token: 0
+  repositoryModel: "", token: 0, roadmap: null, currentRoadmapNodes: []
 };
 const controls = ["runBtn", "saveBtn", "exportBtn", "importBtn", "resetBtn"];
 
@@ -46,6 +46,146 @@ function setView(which) {
   $("simulation").hidden = which !== "simulation";
   $("emptyState").hidden = which !== "empty";
 }
+function element(tag, className = "", textValue = null) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (textValue !== null) node.textContent = String(textValue);
+  return node;
+}
+
+function fieldNotesKey() {
+  const project = state.project?.projectCode || state.project?.id || "none";
+  const steps = state.currentRoadmapNodes.map(n => n.id).join("_") || "general";
+  return "jmbjr.eworkbench.fieldNotes.v1." + project + "." + steps;
+}
+function restoreFieldNotes() {
+  $("fieldNotesLabel").textContent = "Field notes for " +
+    (state.currentRoadmapNodes.map(n => n.id).join(", ") || "this project");
+  try {
+    $("fieldNotes").value = localStorage.getItem(fieldNotesKey()) || "";
+    $("fieldNotesStatus").textContent = "Notes stay in this browser until you paste them into chat.";
+  } catch {
+    $("fieldNotes").value = "";
+    $("fieldNotesStatus").textContent = "Browser storage unavailable; copy notes before leaving.";
+  }
+}
+function renderRoadmap(data) {
+  state.roadmap = data;
+  const project = data.project || {};
+  const milestones = (data.nodes || []).filter(n =>
+    ["step", "decision"].includes(n.kind) && n.status !== "not_applicable");
+  const completed = milestones.filter(n => n.status === "done").length;
+  $("roadmapTitle").textContent = "Current roadmap · " + (project.id || state.project.id);
+  $("roadmapObjective").textContent = "Iteration " + (project.iteration ?? "?") +
+    " objective: " + (project.objective || "Not specified");
+  $("roadmapUpdated").textContent = project.updated_at ? "Tracker updated " + project.updated_at : "";
+  $("roadmapProgress").max = Math.max(milestones.length, 1);
+  $("roadmapProgress").value = completed;
+  $("roadmapCounts").textContent = completed + " of " + milestones.length +
+    " active steps/decisions completed";
+
+  const byId = new Map((data.nodes || []).map(n => [n.id, n]));
+  const activeIds = Array.isArray(project.current_node_ids) ? project.current_node_ids : [];
+  const active = activeIds.map(id => byId.get(id)).filter(Boolean);
+  state.currentRoadmapNodes = active;
+
+  const container = $("activeRoadmapSteps");
+  container.replaceChildren();
+  if (!active.length) {
+    container.append(element("p", "notice", "The tracker has no current step selected."));
+  }
+  for (const node of active) {
+    const card = element("article", "active-roadmap-card");
+    const top = element("div", "active-roadmap-title");
+    top.append(element("span", "step-code", node.id), element("strong", "", node.title));
+    top.append(element("span", "status-chip", (node.status || "unknown").replaceAll("_", " ")));
+    card.append(top);
+    if (node.summary) card.append(element("p", "muted", node.summary));
+    if (node.kind === "decision" && node.question) card.append(element("p", "", node.question));
+
+    const criteria = node.acceptance_criteria ||
+      (node.decision_rule ? [node.decision_rule] : []);
+    if (criteria.length) {
+      card.append(element("h4", "", node.kind === "decision" ? "Decision rule" : "Completion criteria"));
+      const list = element("ul");
+      criteria.forEach(v => list.append(element("li", "", v)));
+      card.append(list);
+    }
+    const guide = state.project.benchGuides?.[node.id] || [];
+    if (guide.length) {
+      card.append(element("h4", "", "Next bench actions"));
+      const list = element("ol");
+      guide.forEach(v => list.append(element("li", "", v)));
+      card.append(list);
+    }
+    container.append(card);
+  }
+  const timeline = $("roadmapTimeline");
+  timeline.replaceChildren();
+  for (const node of milestones) {
+    const li = element("li", "roadmap-item");
+    if (activeIds.includes(node.id)) li.classList.add("roadmap-current");
+    if (node.status === "done") li.classList.add("roadmap-complete");
+    const name = element("strong", "", node.id + " · " + node.title);
+    const status = element("span", "muted small", " · " + (node.status || "unknown").replaceAll("_", " "));
+    li.append(name, status);
+    if (node.summary) li.append(element("p", "small muted", node.summary));
+    timeline.append(li);
+  }
+  restoreFieldNotes();
+}
+async function loadRoadmap() {
+  const selected = state.project;
+  const section = $("roadmapSection");
+  const error = $("roadmapError");
+  state.roadmap = null;
+  state.currentRoadmapNodes = [];
+  section.hidden = !selected.roadmapData;
+  error.hidden = true;
+  $("activeRoadmapSteps").replaceChildren();
+  $("roadmapTimeline").replaceChildren();
+  if (!selected.roadmapData) return;
+  $("roadmapObjective").textContent = "Loading project tracker…";
+  try {
+    const data = await fetchChecked(new URL(selected.roadmapData, root));
+    if (state.project !== selected) return;
+    if (!data.project || !Array.isArray(data.nodes)) throw new Error("Invalid project roadmap JSON");
+    renderRoadmap(data);
+  } catch (err) {
+    if (state.project !== selected) return;
+    error.hidden = false;
+    error.textContent = "Could not load the published roadmap: " + err.message +
+      ". Use the Project roadmap link above for the source file.";
+    $("roadmapObjective").textContent = "";
+    $("roadmapCounts").textContent = "";
+    $("roadmapUpdated").textContent = "";
+  }
+}
+
+function handoffMessage() {
+  const active = state.currentRoadmapNodes;
+  const name = state.project?.title || "EWorkbench project";
+  const schematic = state.schematic;
+  const link = location.href;
+  const notes = $("fieldNotes").value.trim();
+  return [
+    "EWorkbench field update — " + name,
+    "Project: " + (state.project?.projectCode || state.project?.id || "unknown"),
+    "Roadmap step: " + (active.length ?
+      active.map(n => n.id + " — " + n.title + " (" + n.status + ")").join("; ") :
+      "No current step"),
+    "Schematic: " + (schematic ? schematic.title + " [" + schematic.id + "]" : "none"),
+    "Workbench link: " + link,
+    "",
+    "New findings / measurements:",
+    notes || "(Add readings, probe points, power state, and uncertainties here.)",
+    "",
+    "Please reconcile these findings with the existing measured netlist and roadmap,",
+    "distinguish observed continuity from hypotheses, and propose the next bench test.",
+    "For GitHub changes, open a PR; I will review/merge it. Photos/files will be attached separately."
+  ].join("\n");
+}
+
 function renderProjects() {
   const list = $("projectList"); list.replaceChildren();
   $("projectCount").textContent = state.catalog.length + " total";
@@ -76,6 +216,7 @@ async function selectProject(id, requestedSchematic = null) {
   $("roadmapLink").hidden = !state.project.roadmap;
   if (state.project.roadmap) $("roadmapLink").href = state.project.roadmap;
   renderProjects();
+  loadRoadmap().catch(showError);
   const picker = $("schematicSelect"); picker.replaceChildren();
   for (const schematic of state.project.schematics || []) option(picker, schematic.title, schematic.id);
   const picked = state.project.schematics.find(s => s.id === requestedSchematic)?.id ||
@@ -218,6 +359,36 @@ function downloadText(filename, content) {
   document.body.append(anchor); anchor.click(); anchor.remove();
   setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
 }
+$("fieldNotes").addEventListener("input", () => {
+  if (!state.project) return;
+  try {
+    localStorage.setItem(fieldNotesKey(), $("fieldNotes").value);
+    $("fieldNotesStatus").textContent = "Draft saved locally. It has not been sent or committed.";
+  } catch {
+    $("fieldNotesStatus").textContent = "Could not store notes in this browser. Copy your update before leaving.";
+  }
+});
+$("copyUpdateBtn").addEventListener("click", async () => {
+  const text = handoffMessage();
+  try {
+    if (!navigator.clipboard?.writeText) throw new Error("Clipboard API is unavailable");
+    await navigator.clipboard.writeText(text);
+    $("fieldNotesStatus").textContent = "Copied. Paste the message into our ChatGPT conversation and add photos/files.";
+  } catch {
+    $("fieldNotes").focus();
+    $("fieldNotes").select();
+    $("fieldNotesStatus").textContent =
+      "Clipboard permission unavailable. Your notes are selected; copy them manually, then paste into ChatGPT.";
+  }
+});
+$("clearFieldNotesBtn").addEventListener("click", () => {
+  if (!$("fieldNotes").value) return;
+  if (!window.confirm("Clear the locally saved field notes for this roadmap step?")) return;
+  $("fieldNotes").value = "";
+  try { localStorage.removeItem(fieldNotesKey()); } catch {}
+  $("fieldNotesStatus").textContent = "Local notes cleared. GitHub data was not changed.";
+});
+
 $("schematicSelect").addEventListener("change", e => selectSchematic(e.target.value).catch(showError));
 $("runBtn").addEventListener("click", () => {
   if (!state.simulator) return;
