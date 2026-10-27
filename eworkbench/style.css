@@ -97,6 +97,10 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .field-notes>p{margin:.25rem 0 .6rem}
 .field-notes textarea{display:block;width:100%;min-height:110px;resize:vertical;background:#0d182a;color:var(--text);border:1px solid #52657e;border-radius:.55rem;padding:.8rem;font:inherit;line-height:1.5}
 .field-notes textarea:focus-visible,.guide-accordion summary:focus-visible,.roadmap-full summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.roadmap-schema-links{display:flex;gap:.6rem;flex-wrap:wrap;margin:.5rem 0}
+.roadmap-schema-links button{padding:.38rem .65rem;font-size:.82rem;border:1px solid #4c9d8b}
+#manualCopyText{display:block;width:100%;min-height:140px;margin-top:.6rem;background:#101b29;color:var(--text);border:1px solid var(--line);border-radius:.5rem;padding:.7rem;font:inherit}
+#manualCopyText[hidden]{display:none}
 .field-notes .toolbar{margin:.7rem 0 .2rem}
 .field-notes button:first-child{background:#1c5b54;border-color:#3d9685}
 .field-notes button:first-child:hover{background:#277b70}
