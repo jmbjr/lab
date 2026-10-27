@@ -62,6 +62,7 @@ jobs:
           cp -a eworkbench/. _site/eworkbench/
           cp -a _circuitjs_source/ts/dist/. _site/eworkbench/vendor/circuitjs/
           cp _circuitjs_source/README.md _site/eworkbench/vendor/circuitjs/UPSTREAM-README.md
+          git -C _circuitjs_source rev-parse HEAD > _site/eworkbench/vendor/circuitjs/UPSTREAM-COMMIT.txt
           touch _site/.nojekyll
           test -f _site/index.html
           test -f _site/eworkbench/index.html
