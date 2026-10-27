@@ -140,8 +140,9 @@ async function showSimulation(entry, token) {
   // The iframe and controller share the same origin after Pages deployment.
   // CircuitJS1 provides the official importCircuit/exportCircuit API.
   let attempts = 0;
+  let activated = false;
   const ready = () => {
-    if (token !== state.token) return;
+    if (token !== state.token || activated) return;
     let sim = null;
     try { sim = frame.contentWindow.CircuitJS1; } catch {}
     if (!sim || typeof sim.importCircuit !== "function") {
@@ -149,6 +150,7 @@ async function showSimulation(entry, token) {
       else report("CircuitJS1 did not initialize. Check the GitHub Pages build and browser console.", true);
       return;
     }
+    activated = true;
     state.simulator = sim;
     try {
       sim.importCircuit(loadDraftOrRepository(), false);
