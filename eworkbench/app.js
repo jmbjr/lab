@@ -118,6 +118,19 @@ function renderRoadmap(data) {
       guide.forEach(v => list.append(element("li", "", v)));
       card.append(list);
     }
+    const suggested = state.project.benchSchematicRefs?.[node.id] || [];
+    const refs = (state.project.schematics || []).filter(s => suggested.includes(s.id));
+    if (refs.length) {
+      card.append(element("h4", "", "Relevant schematics"));
+      const links = element("div", "roadmap-schema-links");
+      for (const schematic of refs) {
+        const button = element("button", "", "Open " + schematic.title);
+        button.type = "button";
+        button.addEventListener("click", () => selectSchematic(schematic.id).catch(showError));
+        links.append(button);
+      }
+      card.append(links);
+    }
     container.append(card);
   }
   const timeline = $("roadmapTimeline");
@@ -373,18 +386,23 @@ $("copyUpdateBtn").addEventListener("click", async () => {
   try {
     if (!navigator.clipboard?.writeText) throw new Error("Clipboard API is unavailable");
     await navigator.clipboard.writeText(text);
+    $("manualCopyText").hidden = true;
     $("fieldNotesStatus").textContent = "Copied. Paste the message into our ChatGPT conversation and add photos/files.";
   } catch {
-    $("fieldNotes").focus();
-    $("fieldNotes").select();
+    const fallback = $("manualCopyText");
+    fallback.hidden = false;
+    fallback.value = text;
+    fallback.focus();
+    fallback.select();
     $("fieldNotesStatus").textContent =
-      "Clipboard permission unavailable. Your notes are selected; copy them manually, then paste into ChatGPT.";
+      "Clipboard permission unavailable. The full update below is selected. Copy it manually, then paste into ChatGPT.";
   }
 });
 $("clearFieldNotesBtn").addEventListener("click", () => {
   if (!$("fieldNotes").value) return;
   if (!window.confirm("Clear the locally saved field notes for this roadmap step?")) return;
   $("fieldNotes").value = "";
+  $("manualCopyText").hidden = true;
   try { localStorage.removeItem(fieldNotesKey()); } catch {}
   $("fieldNotesStatus").textContent = "Local notes cleared. GitHub data was not changed.";
 });
