@@ -12,9 +12,22 @@
 <path class="wire" d="M330 139 H690"/>
 <text x="301" y="98" class="label">C1R</text>
 <text x="303" y="188" class="detail">? F</text>
-<rect x="690" y="107" width="256" height="67" rx="10" fill="#e3eff8" stroke="#5783a9" stroke-width="2"/>
-<text x="709" y="134" class="label">JL-A (unnumbered)</text>
-<text x="709" y="157" class="detail">contact, vias, cap</text>
+<!-- U1 is a physical-symbol placeholder, NOT a validated pinout.
+     Incoming net reaches some U1 contact (JL-A); position is still unknown. -->
+<rect x="690" y="110" width="256" height="74" rx="10" fill="#e3eff8" stroke="#5783a9" stroke-width="2"/>
+<rect x="721" y="105" width="11" height="7" rx="1" fill="#779ab2"/><rect x="721" y="182" width="11" height="7" rx="1" fill="#779ab2"/>
+<rect x="692" y="119" width="8" height="7" rx="1" fill="#779ab2"/><rect x="937" y="119" width="8" height="7" rx="1" fill="#779ab2"/>
+<rect x="763" y="105" width="11" height="7" rx="1" fill="#779ab2"/><rect x="763" y="182" width="11" height="7" rx="1" fill="#779ab2"/>
+<rect x="692" y="130" width="8" height="7" rx="1" fill="#779ab2"/><rect x="937" y="130" width="8" height="7" rx="1" fill="#779ab2"/>
+<rect x="805" y="105" width="11" height="7" rx="1" fill="#779ab2"/><rect x="805" y="182" width="11" height="7" rx="1" fill="#779ab2"/>
+<rect x="692" y="141" width="8" height="7" rx="1" fill="#779ab2"/><rect x="937" y="141" width="8" height="7" rx="1" fill="#779ab2"/>
+<rect x="847" y="105" width="11" height="7" rx="1" fill="#779ab2"/><rect x="847" y="182" width="11" height="7" rx="1" fill="#779ab2"/>
+<rect x="692" y="152" width="8" height="7" rx="1" fill="#779ab2"/><rect x="937" y="152" width="8" height="7" rx="1" fill="#779ab2"/>
+<rect x="889" y="105" width="11" height="7" rx="1" fill="#779ab2"/><rect x="889" y="182" width="11" height="7" rx="1" fill="#779ab2"/>
+<rect x="692" y="163" width="8" height="7" rx="1" fill="#779ab2"/><rect x="937" y="163" width="8" height="7" rx="1" fill="#779ab2"/>
+<text x="818" y="135" text-anchor="middle" class="label" style="font-size:17px">U1 — JL / JieLi</text>
+<text x="818" y="154" text-anchor="middle" class="detail" style="font-size:12px">approx. 20 contacts · pinout TBD</text>
+<text x="818" y="173" text-anchor="middle" style="font-family:system-ui;font-size:12px;font-weight:700;fill:#a5652b">JL-A (pad position unknown)</text>
 <circle class="junction" cx="155" cy="139" r="6"/>
 <!-- R1R shunt to ground -->
 <path class="wire" d="M155 139 V209"/>
