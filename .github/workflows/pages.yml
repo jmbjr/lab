@@ -1,10 +1,11 @@
-name: Publish inventory
+name: Publish lab site
 
 on:
   push:
     branches: [main]
     paths:
       - "inventory/**"
+      - "eworkbench/**"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -19,21 +20,60 @@ concurrency:
 
 jobs:
   deploy:
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout lab
         uses: actions/checkout@v4
+
+      # Build the TypeScript/Vite CircuitJS1 app in Actions rather than
+      # checking generated JS assets into jmbjr/lab. The upstream source
+      # is copied to the site only after compilation; see eworkbench/README.md.
+      - name: Checkout CircuitJS1
+        uses: actions/checkout@v4
+        with:
+          repository: pfalstad/circuitjs1
+          ref: master
+          path: _circuitjs_source
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: _circuitjs_source/ts/package-lock.json
+
+      - name: Build CircuitJS1
+        working-directory: _circuitjs_source/ts
+        run: |
+          npm ci
+          npm run build
+          test -f dist/circuitjs.html
+
+      - name: Assemble Pages site
+        run: |
+          set -euo pipefail
+          mkdir -p _site/eworkbench/vendor/circuitjs
+          # Keep the historical inventory page at the site root.
+          cp -a inventory/. _site/
+          cp -a eworkbench/. _site/eworkbench/
+          cp -a _circuitjs_source/ts/dist/. _site/eworkbench/vendor/circuitjs/
+          cp _circuitjs_source/README.md _site/eworkbench/vendor/circuitjs/UPSTREAM-README.md
+          touch _site/.nojekyll
+          test -f _site/index.html
+          test -f _site/eworkbench/index.html
+          test -f _site/eworkbench/vendor/circuitjs/circuitjs.html
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload inventory site
+      - name: Upload complete lab site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: inventory
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment
