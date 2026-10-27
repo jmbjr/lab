@@ -1,0 +1,42 @@
+name: Validate EWorkbench
+
+on:
+  pull_request:
+    paths:
+      - "eworkbench/**"
+      - ".github/workflows/pages.yml"
+      - ".github/workflows/eworkbench-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout lab
+        uses: actions/checkout@v4
+      - name: Check workbench JavaScript and project manifests
+        run: |
+          node --check eworkbench/app.js
+          node eworkbench/validate.mjs
+      - name: Checkout upstream simulator
+        uses: actions/checkout@v4
+        with:
+          repository: pfalstad/circuitjs1
+          ref: master
+          path: _circuitjs_source
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: _circuitjs_source/ts/package-lock.json
+      - name: Verify CircuitJS1 compiles
+        working-directory: _circuitjs_source/ts
+        run: |
+          npm ci
+          npm run build
+          test -f dist/circuitjs.html
