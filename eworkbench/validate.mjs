@@ -11,6 +11,33 @@ for (const entry of catalog.projects) {
   const dirname = path.dirname(entry.path);
   if (p.id !== entry.id) errors.push("Project ID mismatch: " + entry.id);
   const ids = new Set();
+  if (p.roadmapData) {
+    const roadmapPath = path.resolve(base, p.roadmapData);
+    if (!fs.existsSync(roadmapPath)) {
+      errors.push("Missing roadmap data: " + p.roadmapData);
+    } else {
+      try {
+        const tracker = JSON.parse(fs.readFileSync(roadmapPath, "utf8"));
+        const nodeIds = new Set((tracker.nodes || []).map(n => n.id));
+        if (tracker.project?.id !== p.projectCode)
+          errors.push("Roadmap project code mismatch: " + entry.id);
+        if (!Array.isArray(tracker.nodes) || !nodeIds.size)
+          errors.push("Empty roadmap: " + entry.id);
+        for (const current of tracker.project?.current_node_ids || []) {
+          if (!nodeIds.has(current)) errors.push("Unknown current roadmap node: " + current);
+        }
+      } catch (err) {
+        errors.push("Unreadable roadmap data: " + err.message);
+      }
+    }
+  }
+  for (const [nodeId, refs] of Object.entries(p.benchSchematicRefs || {})) {
+    if (!p.schematics.some(x => x.id === refs[0]) && refs.length)
+      errors.push("Unrecognized schematic recommendation on " + nodeId);
+    for (const ref of refs) {
+      if (!p.schematics.some(x => x.id === ref)) errors.push("Unknown suggested schematic: " + ref);
+    }
+  }
   for (const s of p.schematics) {
     if (ids.has(s.id)) errors.push("Duplicate schematic: " + s.id);
     ids.add(s.id);

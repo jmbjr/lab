@@ -26,6 +26,46 @@
       <div><p id="projectBadge" class="eyebrow">PROJECT</p><h2 id="projectTitle">Loading projects…</h2><p id="projectDescription" class="muted"></p></div>
       <a id="roadmapLink" target="_blank" rel="noopener" hidden>Project roadmap ↗</a>
     </div>
+    <details class="guide-accordion" id="workbenchHelp">
+      <summary><span><strong>How to use and update schematics</strong><small>Bench measurements → notes → share here → GitHub update</small></span></summary>
+      <div class="guide-content">
+        <div class="guide-grid">
+          <div><h3>1 · Study the measured drawing</h3><p>Choose an <strong>observed</strong> schematic for continuity findings. Its JSON, SVG, and unidentified pads are reference records — <strong>not editable in the browser</strong>. Confirm the power state, probe endpoints, readings, and whether an idea is measured or only suspected.</p></div>
+          <div><h3>2 · Try a simulation</h3><p>Choose a <strong>simulation sandbox</strong>, edit parts inside CircuitJS1, and press Run/Pause. <strong>Save browser draft</strong> stores a copy only on this device; <strong>Download .txt</strong> exports the circuit to keep or share. Reset restores the committed repository model.</p></div>
+          <div><h3>3 · Send new measurements</h3><p>Read the current roadmap step, take measurements with the board in a safe state, and enter results under <strong>Field notes</strong>. Click <strong>Copy update for ChatGPT</strong>, then paste it into our chat and attach close-up photos or exported circuit files as needed.</p></div>
+          <div><h3>4 · Update the repository</h3><p>For now, we'll revise the observed netlist, drawing, U1 pad map, and roadmap through GitHub commits/pull requests after reviewing your notes here. <strong>The website does not write changes to GitHub</strong>. Merge the PR to publish the latest version.</p></div>
+        </div>
+        <p class="small muted">Always distinguish continuity-confirmed nets from guesses and CircuitJS1 component values. <a href="README.md">Full workbench documentation ↗</a></p>
+      </div>
+    </details>
+    <section id="roadmapSection" class="roadmap-section" aria-labelledby="roadmapTitle" hidden>
+      <div class="section-head roadmap-head">
+        <div><p class="eyebrow">PROJECT GUIDE</p><h3 id="roadmapTitle">Current roadmap</h3></div>
+        <span id="roadmapUpdated" class="muted small"></span>
+      </div>
+      <p id="roadmapObjective" class="roadmap-objective"></p>
+      <div class="roadmap-progress">
+        <progress id="roadmapProgress" value="0" max="1" aria-label="Completed roadmap stages"></progress>
+        <span id="roadmapCounts" class="muted small"></span>
+      </div>
+      <div id="activeRoadmapSteps" class="current-steps"></div>
+      <details class="roadmap-full">
+        <summary>See all project steps and decisions</summary>
+        <ol id="roadmapTimeline" class="roadmap-timeline"></ol>
+      </details>
+      <div class="field-notes">
+        <label id="fieldNotesLabel" for="fieldNotes">Field notes for the current step</label>
+        <p class="small muted">Note probe points, meter mode, resistance/continuity, power state, photos, and remaining unknowns. This draft stays in this browser only.</p>
+        <textarea id="fieldNotes" rows="5" placeholder="Battery disconnected. Measured [component pad] to [reference]. Result: ..."></textarea>
+        <div class="toolbar">
+          <button id="copyUpdateBtn" type="button">Copy update for ChatGPT</button>
+          <button id="clearFieldNotesBtn" type="button">Clear notes</button>
+        </div>
+        <p id="fieldNotesStatus" class="small muted" role="status"></p>
+        <textarea id="manualCopyText" readonly hidden aria-label="Manual copy text for ChatGPT"></textarea>
+      </div>
+      <p id="roadmapError" class="notice error" hidden></p>
+    </section>
     <div class="selector-row">
       <label for="schematicSelect">Schematic</label>
       <select id="schematicSelect" aria-label="Select schematic"></select>
