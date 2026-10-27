@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="570" viewBox="0 0 1000 570" role="img" aria-labelledby="title description">
+<title id="title">Observed microphone input connectivity</title>
+<desc id="description">Measured network: M plus connects to R1R to ground and C1R to a JL chip pad. Ground joins C0 to net X, then R1L to M minus. M minus connects via C1L to an unknown node. Values unknown.</desc>
+<rect width="1000" height="570" fill="#f7f9fc"/>
+<style>text{font-family:system-ui,Arial,sans-serif;fill:#23344a}.wire{fill:none;stroke:#233d56;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.part{stroke:#245d82;stroke-width:3;fill:none}.junction{fill:#245d82}.label{font-weight:bold;font-size:20px}.detail{fill:#5a6474;font-size:16px}.net{fill:#256186;font-size:17px;font-weight:600}.unknown{fill:#945c36;font-size:16px;font-weight:bold}</style>
+<text x="34" y="35" font-size="25" font-weight="bold">Wireless mic — observed nets</text>
+<text x="34" y="63" class="detail">Battery disconnected · confirmed continuity only · values unknown</text>
+<!-- Top M+ to coupling capacitor to JL contact -->
+<text x="35" y="145" class="label">M+</text>
+<path class="wire" d="M88 139 H315"/>
+<path class="part" d="M315 112 V166 M330 112 V166"/>
+<path class="wire" d="M330 139 H690"/>
+<text x="301" y="98" class="label">C1R</text>
+<text x="303" y="188" class="detail">? F</text>
+<rect x="690" y="107" width="256" height="67" rx="10" fill="#e3eff8" stroke="#5783a9" stroke-width="2"/>
+<text x="709" y="134" class="label">JL-A (unnumbered)</text>
+<text x="709" y="157" class="detail">contact, vias, cap</text>
+<circle class="junction" cx="155" cy="139" r="6"/>
+<!-- R1R shunt to ground -->
+<path class="wire" d="M155 139 V209"/>
+<path class="part" d="M155 209 L145 219 L165 231 L145 243 L165 255 L155 268"/>
+<path class="wire" d="M155 268 V303 H400"/>
+<text x="181" y="243" class="label">R1R</text><text x="181" y="263" class="detail">? Ω</text>
+<circle class="junction" cx="155" cy="303" r="6"/>
+<text x="76" y="329" class="net">GND</text>
+<path class="wire" d="M155 303 V343 M136 343 H174 M143 351 H167 M150 359 H160"/>
+<!-- C0 series from ground to NET_X -->
+<path class="wire" d="M400 303 V365"/>
+<path class="part" d="M373 365 H427 M373 382 H427"/>
+<path class="wire" d="M400 382 V445 H532"/>
+<text x="436" y="377" class="label">C0</text><text x="436" y="400" class="detail">? F</text>
+<circle class="junction" cx="400" cy="445" r="6"/>
+<text x="315" y="475" class="net">NET_X</text>
+<!-- R1L to M- -->
+<path class="part" d="M532 445 L546 435 L558 455 L570 435 L582 455 L596 445"/>
+<path class="wire" d="M596 445 H731"/>
+<text x="535" y="413" class="label">R1L</text><text x="542" y="480" class="detail">? Ω</text>
+<text x="744" y="453" class="label">M−</text>
+<circle class="junction" cx="731" cy="445" r="6"/>
+<!-- C1L from M- to unknown net -->
+<path class="wire" d="M731 445 V352"/>
+<path class="part" d="M704 352 H758 M704 336 H758"/>
+<path class="wire" d="M731 336 V274"/>
+<text x="754" y="350" class="label">C1L</text><text x="755" y="375" class="detail">? F</text>
+<rect x="663" y="218" width="292" height="59" rx="10" fill="#fef3e7" stroke="#d49b55" stroke-width="2"/>
+<text x="680" y="243" class="unknown">NET_C1L_OUT</text>
+<text x="680" y="263" class="detail">downstream not yet traced</text>
+<text x="34" y="543" class="detail">Diagram layout is for documentation only. Position does not indicate PCB trace routing.</text>
+</svg>
