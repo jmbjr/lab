@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>EWorkbench | JB Lab</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="shell header-row">
+    <div><p class="eyebrow">JMBJR / LAB</p><h1>Electrical Workbench</h1>
+      <p class="subtitle">Measured connectivity, experiments, and live circuit simulation.</p></div>
+    <nav class="top-nav" aria-label="Lab navigation"><a href="../">← Lab inventory</a><a href="https://github.com/jmbjr/lab/tree/main/eworkbench" target="_blank" rel="noopener">Source on GitHub ↗</a></nav>
+  </div>
+</header>
+<div class="shell app-layout">
+  <aside class="sidebar">
+    <div class="sidebar-heading"><h2>Projects</h2><span id="projectCount" class="muted"></span></div>
+    <div id="projectList" class="project-list" aria-label="Project list"></div>
+    <p class="muted small">Each project can have multiple schematics. Measured facts remain separate from simulation assumptions.</p>
+  </aside>
+  <main class="workspace">
+    <div class="workspace-heading">
+      <div><p id="projectBadge" class="eyebrow">PROJECT</p><h2 id="projectTitle">Loading projects…</h2><p id="projectDescription" class="muted"></p></div>
+      <a id="roadmapLink" target="_blank" rel="noopener" hidden>Project roadmap ↗</a>
+    </div>
+    <div class="selector-row">
+      <label for="schematicSelect">Schematic</label>
+      <select id="schematicSelect" aria-label="Select schematic"></select>
+    </div>
+    <div id="error" role="alert" class="notice error" hidden></div>
+    <section id="observed" hidden>
+      <div class="section-head"><h3 id="observedTitle">Observed circuit</h3><span class="tag observed-tag">Measured / inferred</span></div>
+      <p id="observedDescription" class="muted"></p>
+      <div class="diagram-card">
+        <img id="observedImage" alt="Measured microphone input connections, with unknown values explicitly labeled" src="">
+        <p class="small muted">This is a connectivity record, not a validated electrical simulation. Component values and the JL SoC internals remain unknown.</p>
+      </div>
+      <h3>Connectivity record</h3><div id="netTable" class="table-scroll"></div>
+      <h3>Evidence and caveats</h3><ul id="evidence"></ul>
+    </section>
+    <section id="simulation" hidden>
+      <div class="section-head"><h3 id="simulationTitle">CircuitJS1 sandbox</h3><span class="tag sim-tag">Hypothetical model</span></div>
+      <p id="simulationDescription" class="muted"></p>
+      <div id="assumptions" class="notice assumption"></div>
+      <div class="toolbar" aria-label="Simulation controls">
+        <button id="runBtn" disabled>▶ Run</button>
+        <button id="saveBtn" disabled>Save browser draft</button>
+        <button id="exportBtn" disabled>Download .txt</button>
+        <button id="importBtn" disabled>Import .txt</button>
+        <button id="resetBtn" disabled>Reset to repository version</button>
+        <input id="fileInput" type="file" accept=".txt,text/plain" hidden>
+      </div>
+      <p id="simStatus" class="small muted" role="status">Simulator not loaded.</p>
+      <div class="sim-frame-wrap"><iframe id="simFrame" title="CircuitJS1 interactive simulator" loading="lazy" allowfullscreen></iframe></div>
+      <p class="small muted">Edit components directly in CircuitJS1. Browser drafts are stored only in this browser, not committed to GitHub. Download the .txt file to retain or contribute changes. Simulations use assumed parameters and are not measurements of the actual microphone.</p>
+    </section>
+    <section id="emptyState" class="notice" hidden>No schematics are available for this project yet.</section>
+  </main>
+</div>
+<footer class="shell footer">Built on <a href="https://github.com/pfalstad/circuitjs1" target="_blank" rel="noopener">CircuitJS1</a> (GPL), a browser-based electrical simulator. <a href="README.md">Implementation notes</a>.</footer>
+</body>
+</html>

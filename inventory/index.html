@@ -10,6 +10,9 @@ body{margin:0;background:Canvas;color:CanvasText}
 header{position:sticky;top:0;z-index:3;background:Canvas;border-bottom:1px solid color-mix(in srgb,CanvasText 18%,transparent);padding:1rem}
 .wrap{max-width:1200px;margin:auto}
 h1{margin:.1rem 0 .8rem;font-size:1.5rem}
+.site-nav{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-bottom:.65rem}
+.site-nav a{color:inherit;text-underline-offset:.2em}
+.site-nav a[aria-current=page]{font-weight:700;text-decoration:none}
 .controls{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
 input,button{font:inherit;padding:.55rem .7rem;border:1px solid color-mix(in srgb,CanvasText 25%,transparent);border-radius:.5rem;background:Canvas;color:CanvasText}
 input[type=search]{min-width:18rem;flex:1}
@@ -37,6 +40,10 @@ tr:last-child td{border-bottom:0}
 <header>
   <div class="wrap">
     <h1>Lab Inventory</h1>
+    <nav class="site-nav" aria-label="Lab tools">
+      <a href="./" aria-current="page">Inventory</a>
+      <a href="eworkbench/">Electrical Workbench ↗</a>
+    </nav>
     <div class="controls">
       <input id="globalFilter" type="search" placeholder="Filter all inventory…">
       <button id="columnsBtn" type="button">Columns</button>

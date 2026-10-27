@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "projects": [
+    {
+      "id": "wireless-mic",
+      "path": "projects/wireless-mic/project.json",
+      "title": "Wireless microphone",
+      "summary": "TODO-001 · JieLi AC7006-family input network"
+    }
+  ]
+}

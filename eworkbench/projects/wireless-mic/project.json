@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "id": "wireless-mic",
+  "projectCode": "TODO-001",
+  "title": "Wireless microphone — input circuit",
+  "description": "Reverse engineering the two-wire microphone front end of a JieLi AC7006-family wireless mic. The speaker endpoint is the ON M45 AUX input.",
+  "roadmap": "https://github.com/jmbjr/lab/blob/main/projects/todo/TODO-001/todo.json",
+  "schematics": [
+    {
+      "id": "mic-input-observed",
+      "title": "Mic input — observed connections",
+      "kind": "observed",
+      "source": "mic-input-observed.json",
+      "diagram": "mic-input-observed.svg",
+      "description": "Continuity results as measured with the battery disconnected. Unknown values and unidentified nodes are deliberately retained."
+    },
+    {
+      "id": "ac-coupling-sandbox",
+      "title": "AC-coupling — simulation sandbox",
+      "kind": "simulation",
+      "source": "ac-coupling-sandbox.txt",
+      "description": "A generic source → capacitor → resistor filter for practicing CircuitJS1 editing and simulation. Not a reconstruction of the AC7006 input circuit.",
+      "assumptions": [
+        "1 kHz sine source at 50 mV peak",
+        "100 nF series capacitor (illustrative)",
+        "2.2 kΩ load resistor (illustrative)",
+        "No microphone bias circuit or JL SoC internal model",
+        "Does NOT implement the five observed board parts as a verified circuit"
+      ]
+    }
+  ]
+}
