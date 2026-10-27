@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "eworkbench/**"
+      - "projects/**"
       - ".github/workflows/pages.yml"
       - ".github/workflows/eworkbench-check.yml"
   workflow_dispatch:
