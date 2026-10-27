@@ -113,5 +113,20 @@
         "2": "NET_C1R_OUT"
       }
     }
+  ],
+  "devices": [
+    {
+      "ref": "U1",
+      "device_model": "jl-u1-chip.json",
+      "candidate": "JieLi AC7006-family audio/radio SoC",
+      "confidence": "family_candidate; exact part/package/pinout unknown",
+      "connections": [
+        {
+          "net": "NET_C1R_OUT",
+          "pin_alias": "JL-A",
+          "physical_pad": null
+        }
+      ]
+    }
   ]
 }
