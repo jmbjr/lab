@@ -1,0 +1,277 @@
+{
+  "schema_version": "1.0",
+  "id": "U1",
+  "name": "JieLi / JL audio + 2.4 GHz SoC",
+  "manufacturer": "Zhuhai JieLi Technology",
+  "family_candidate": "AC7006 family",
+  "exact_part_number": null,
+  "status": "provisional",
+  "board_identification": "AC7006JM-like PCB silkscreen; not definitive IC part number",
+  "observed_package": {
+    "style": "QFN-like",
+    "contacts_per_side_estimate": 5,
+    "total_contact_estimate": 20,
+    "confirmed_contact_count": false,
+    "orientation": "Top view as photographed with 24 MHz crystal to the right; photo shows a top-left dot, but it is not confirmed as manufacturer pin-1."
+  },
+  "pad_labeling": "T1–T5, R1–R5, B1–B5, L1–L5 are positional markers only, not JEDEC pin numbers. Assign functional names only when positively identified.",
+  "contacts": [
+    {
+      "id": "T1",
+      "side": "T",
+      "position": 1,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "T2",
+      "side": "T",
+      "position": 2,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "T3",
+      "side": "T",
+      "position": 3,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "T4",
+      "side": "T",
+      "position": 4,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "T5",
+      "side": "T",
+      "position": 5,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "R1",
+      "side": "R",
+      "position": 1,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "R2",
+      "side": "R",
+      "position": 2,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "R3",
+      "side": "R",
+      "position": 3,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "R4",
+      "side": "R",
+      "position": 4,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "R5",
+      "side": "R",
+      "position": 5,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "B1",
+      "side": "B",
+      "position": 1,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "B2",
+      "side": "B",
+      "position": 2,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "B3",
+      "side": "B",
+      "position": 3,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "B4",
+      "side": "B",
+      "position": 4,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "B5",
+      "side": "B",
+      "position": 5,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "L1",
+      "side": "L",
+      "position": 1,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "L2",
+      "side": "L",
+      "position": 2,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "L3",
+      "side": "L",
+      "position": 3,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "L4",
+      "side": "L",
+      "position": 4,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    },
+    {
+      "id": "L5",
+      "side": "L",
+      "position": 5,
+      "manufacturer_pin": null,
+      "function": null,
+      "net": null,
+      "confidence": "unmapped"
+    }
+  ],
+  "known_connections": [
+    {
+      "net": "NET_C1R_OUT",
+      "alias": "JL-A",
+      "component": "C1R.2",
+      "physical_pad": null,
+      "evidence": "User continuity: far side C1R reaches an accessible JL contact and other capacitor/vias.",
+      "confidence": "continuity_confirmed",
+      "todo": "Locate JL-A on positional contact map (T/R/B/L)."
+    }
+  ],
+  "functional_blocks": [
+    {
+      "block": "microphone ADC / bias",
+      "confidence": "family_reference_only",
+      "pins": "unknown"
+    },
+    {
+      "block": "24 MHz crystal oscillator",
+      "confidence": "board_crystal_observed",
+      "pins": "unknown"
+    },
+    {
+      "block": "2.4 GHz RF / antenna",
+      "confidence": "board_antenna_observed",
+      "pins": "unknown"
+    },
+    {
+      "block": "USB / charging interface",
+      "confidence": "board_usb_observed; exact SoC connection unknown",
+      "pins": "unknown"
+    },
+    {
+      "block": "GPIO / buttons",
+      "confidence": "board_buttons_observed",
+      "pins": "unknown"
+    },
+    {
+      "block": "DAC / audio output",
+      "confidence": "related AC7006 devices only; exposed output unverified",
+      "pins": "unknown"
+    }
+  ],
+  "sources": [
+    {
+      "label": "AC7006D Datasheet V1.1, 2021 (related part; QFN32 pinout NOT transferable)",
+      "url": "https://bluetooth.com.cn/images/chips/datasheet/Jieli_AC7006D_Datasheet.pdf",
+      "scope": "family_function_reference_only",
+      "package_contacts": 32
+    },
+    {
+      "label": "AC7066M wireless microphone TX reference schematic (different SoC)",
+      "url": "https://www.yunthinker.com/static/upload/file/20250603/1748945965636685.pdf",
+      "scope": "application_circuit_reference_only",
+      "package_contacts": null
+    },
+    {
+      "label": "JieLi marking background; logo confirms vendor, printed code may be disguised",
+      "url": "https://github.com/virtualabs/jielie-info",
+      "scope": "identification_background"
+    }
+  ],
+  "next_actions": [
+    "Confirm exact contact count and orientation visually before assigning numbered pins.",
+    "Relocate JL-A on the drawing by side and contact index without powered probing.",
+    "Trace both sides of C1L downstream and add any proven U1 connections.",
+    "Only after exact part identification, import verified manufacturer function names."
+  ],
+  "notes": [
+    "JieLi logo is visible on the IC; the exact engraved part number is not reliably readable.",
+    "Board silkscreen resembling AC7006JM is evidence for a candidate family only; it does not independently prove the installed die or package.",
+    "The apparent 5×4 / 20-contact QFN-like footprint is a visual estimate from macro photos. It must be confirmed by inspection.",
+    "Positional labels T1–T5, R1–R5, B1–B5, L1–L5 are NOT conventional manufacturer numbering and do not assert which corner is pin 1.",
+    "Manufacturer function labels remain blank because the accessible AC7006D 32-pin datasheet is a different package.",
+    "JL-A is a continuity-confirmed connection to C1R.2; its specific U1 contact position has not been recorded.",
+    "The AC7066M reference is from a different JieLi wireless-microphone SoC, useful as a functional example but NOT its pinout."
+  ]
+}

@@ -28,6 +28,12 @@ The workflow checks out [pfalstad/circuitjs1](https://github.com/pfalstad/circui
 
 Schematics have stable IDs. The URL uses `?project=<id>&schematic=<id>`, so you can bookmark or share an exact workbench selection.
 
+## U1 component placeholder
+
+The wireless-mic project includes **U1: a provisional JieLi chip symbol**, a separate 20-contact positional map, and a machine-readable model with every unknown manufacturer pin and function explicitly unassigned. See [the identification notes](projects/wireless-mic/jl-u1-references.md) and [the U1 model](projects/wireless-mic/jl-u1-chip.json).
+
+The AC7006D 32-pin datasheet and the AC7066M wireless-microphone reference schematic are **related-design references only**; neither establishes the target chip's exact pinout. The observed connectivity and CircuitJS1 simulation remain separate.
+
 ## Editing and saving
 
 CircuitJS1 is embedded in a same-origin iframe. The workbench uses the documented `importCircuit` / `exportCircuit` API and native simulator editing. A user can:

@@ -15,6 +15,14 @@
       "description": "Continuity results as measured with the battery disconnected. Unknown values and unidentified nodes are deliberately retained."
     },
     {
+      "id": "jl-u1-padmap",
+      "title": "U1 JL chip — physical contacts",
+      "kind": "observed",
+      "source": "jl-u1-chip.json",
+      "diagram": "jl-u1-padmap.svg",
+      "description": "A provisional U1 QFN-like symbol and physical pad map. The 20-contact estimate is based on photos, not a verified package datasheet. Pad labels describe positions, not manufacturer pin numbers."
+    },
+    {
       "id": "ac-coupling-sandbox",
       "title": "AC-coupling — simulation sandbox",
       "kind": "simulation",
