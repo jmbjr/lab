@@ -12,7 +12,7 @@ The repository's pre-existing Pages workflow published `inventory/` at the publi
 - `eworkbench/.` → `/lab/eworkbench/`
 - compiled CircuitJS1 (`ts/dist/.`) → `/lab/eworkbench/vendor/circuitjs/`
 
-The workflow checks out [pfalstad/circuitjs1](https://github.com/pfalstad/circuitjs1), runs `npm ci` and `npm run build` in its `ts/` folder, then copies the Vite assets under the same origin as this website. The CircuitJS1 source follows GPL v2-or-later; its upstream README and exact Git commit identifier are included in the deployed vendor directory (not checked in). Only the compiled deployment artifact is served.
+The workflow checks out [pfalstad/circuitjs1](https://github.com/pfalstad/circuitjs1), runs `npm ci` and `npm run build` in its `ts/` folder, then copies the Vite assets under the same origin as this website. The CircuitJS1 source follows GPL v2-or-later; its upstream README and exact Git commit identifier are included in the deployed vendor directory (not checked in). The Pages build excludes the optional upstream Dropbox script and its root-scoped manifest link. Only the compiled deployment artifact is served.
 
 **Important:** This version uses the upstream `master` branch at deploy time; pinning a tested commit is recommended after the first successful build. Changes to the simulator itself are upstream-controlled.
 
@@ -48,7 +48,7 @@ CircuitJS1 is an educational simulator, not a sign-off tool for battery safety, 
 
 ## License and provenance
 
-CircuitJS1 © its respective authors, [source repository](https://github.com/pfalstad/circuitjs1), licensed under the GNU GPL v2 or later. The upstream project is compiled and served unmodified as part of this GitHub Pages site; the workbench wrapper uses its public JavaScript API. See `vendor/circuitjs/UPSTREAM-README.md` and `vendor/circuitjs/UPSTREAM-COMMIT.txt` on the published site.
+CircuitJS1 © its respective authors, [source repository](https://github.com/pfalstad/circuitjs1), licensed under the GNU GPL v2 or later. The upstream project is compiled as part of this GitHub Pages site, with the optional Dropbox script and manifest link removed during the build; the workbench wrapper uses its public JavaScript API. See `vendor/circuitjs/UPSTREAM-README.md` and `vendor/circuitjs/UPSTREAM-COMMIT.txt` on the published site.
 
 ## Future evaluation
 
