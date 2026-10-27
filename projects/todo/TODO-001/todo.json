@@ -9,7 +9,7 @@
     "iteration": 1,
     "objective": "Identify and prove a usable audio interface inside the wireless karaoke microphone, then reproduce intelligible microphone audio through the ON M45 AUX input without modifying the speaker.",
     "created_at": "2026-10-25",
-    "updated_at": "2026-10-25",
+    "updated_at": "2026-10-27",
     "current_node_ids": [
       "STEP-004"
     ],
@@ -75,7 +75,7 @@
       "id": "STEP-001",
       "kind": "step",
       "title": "Open microphone non-destructively",
-      "status": "ready",
+      "status": "done",
       "summary": "Open the microphone without cutting traces, removing components, or soldering.",
       "acceptance_criteria": [
         "Enclosure is open with PCB(s), battery, microphone capsule, controls, and antenna area accessible.",
@@ -146,7 +146,7 @@
       "id": "STEP-004",
       "kind": "step",
       "title": "Trace microphone signal path",
-      "status": "ready",
+      "status": "in_progress",
       "summary": "Trace from the microphone capsule toward processing and the RF section using visual inspection and continuity measurements before powered probing.",
       "acceptance_criteria": [
         "Microphone capsule pins and ground/reference are identified.",
@@ -154,8 +154,9 @@
         "Candidate test points are documented before powered measurements."
       ],
       "outputs": [
-        "Preliminary signal-flow diagram",
-        "Candidate probe points"
+        "Partial continuity-derived mic input netlist recorded in eworkbench/projects/wireless-mic/mic-input-observed.json.",
+        "Provisional U1 chip contact map recorded in eworkbench/projects/wireless-mic/jl-u1-chip.json; the JL-A pad position and exact manufacturer pinout remain unknown.",
+        "Next: identify JL-A physical contact and trace C1L downstream with power disconnected."
       ],
       "upstream": [
         "STEP-002"
