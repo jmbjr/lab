@@ -45,5 +45,11 @@
       "Trace the previously unknown side of C1L. Record positive continuity, resistance values, no-continuity results, and the ground reference.",
       "Update the measured netlist only after continuity confirms a connection. Do not assign official AC7006 pin functions from the 32-pin variant datasheet."
     ]
+  },
+  "benchSchematicRefs": {
+    "STEP-004": [
+      "jl-u1-padmap",
+      "mic-input-observed"
+    ]
   }
 }
