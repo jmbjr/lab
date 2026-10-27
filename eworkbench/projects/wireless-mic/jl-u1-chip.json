@@ -264,5 +264,14 @@
     "Relocate JL-A on the drawing by side and contact index without powered probing.",
     "Trace both sides of C1L downstream and add any proven U1 connections.",
     "Only after exact part identification, import verified manufacturer function names."
+  ],
+  "notes": [
+    "JieLi logo is visible on the IC; the exact engraved part number is not reliably readable.",
+    "Board silkscreen resembling AC7006JM is evidence for a candidate family only; it does not independently prove the installed die or package.",
+    "The apparent 5×4 / 20-contact QFN-like footprint is a visual estimate from macro photos. It must be confirmed by inspection.",
+    "Positional labels T1–T5, R1–R5, B1–B5, L1–L5 are NOT conventional manufacturer numbering and do not assert which corner is pin 1.",
+    "Manufacturer function labels remain blank because the accessible AC7006D 32-pin datasheet is a different package.",
+    "JL-A is a continuity-confirmed connection to C1R.2; its specific U1 contact position has not been recorded.",
+    "The AC7066M reference is from a different JieLi wireless-microphone SoC, useful as a functional example but NOT its pinout."
   ]
 }
