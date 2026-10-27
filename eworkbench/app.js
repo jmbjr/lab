@@ -88,6 +88,42 @@ function cell(text) {
   td.textContent = text == null ? "" : String(text);
   return td;
 }
+function drawPadTable(data) {
+  const table = document.createElement("table");
+  const head = document.createElement("thead"), row = document.createElement("tr");
+  for (const h of ["Pad position", "Manufacturer pin", "Function", "Mapped net"]) {
+    const th = document.createElement("th"); th.textContent = h; row.append(th);
+  }
+  head.append(row); table.append(head);
+  const body = document.createElement("tbody");
+  for (const contact of data.contacts || []) {
+    const r = document.createElement("tr");
+    r.append(cell(contact.id), cell(contact.manufacturer_pin ?? "Unknown"),
+      cell(contact.function ?? "Unidentified"), cell(contact.net ?? "Not mapped"));
+    body.append(r);
+  }
+  table.append(body); $("netTable").replaceChildren(table);
+}
+function drawEvidence(data) {
+  const evidence = $("evidence"); evidence.replaceChildren();
+  const notes = [...(data.notes || [])];
+  if (data.known_connections?.length) {
+    for (const connection of data.known_connections) notes.push(
+      connection.alias + ": " + connection.evidence + " Physical pad: " +
+      (connection.physical_pad ?? "not located"));
+  }
+  for (const note of notes) {
+    const li = document.createElement("li"); li.textContent = note; evidence.append(li);
+  }
+  for (const source of data.sources || []) {
+    if (!source.url?.startsWith("https://")) continue;
+    const li = document.createElement("li"), anchor = document.createElement("a");
+    anchor.href = source.url; anchor.target = "_blank"; anchor.rel = "noopener";
+    anchor.textContent = source.label;
+    li.append(anchor, document.createTextNode(" — " + source.scope));
+    evidence.append(li);
+  }
+}
 function drawNetTable(data) {
   const table = document.createElement("table");
   const head = document.createElement("thead");
@@ -113,12 +149,10 @@ async function showObserved(entry, token) {
   $("observedTitle").textContent = entry.title;
   $("observedDescription").textContent = entry.description || "";
   $("observedImage").src = new URL(entry.diagram, dir).href;
-  drawNetTable(data);
-  const evidence = $("evidence");
-  evidence.replaceChildren();
-  for (const note of data.notes || []) {
-    const li = document.createElement("li"); li.textContent = note; evidence.append(li);
-  }
+  $("connectivityHeading").textContent = data.contacts ? "Physical contact inventory" : "Connectivity record";
+  if (data.contacts) drawPadTable(data);
+  else drawNetTable(data);
+  drawEvidence(data);
 }
 function loadDraftOrRepository() {
   try { return localStorage.getItem(draftKey()) || state.repositoryModel; }
