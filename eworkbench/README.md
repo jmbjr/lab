@@ -28,6 +28,18 @@ The workflow checks out [pfalstad/circuitjs1](https://github.com/pfalstad/circui
 
 Schematics have stable IDs. The URL uses `?project=<id>&schematic=<id>`, so you can bookmark or share an exact workbench selection.
 
+## Circuit basics tutorial
+
+Select **Circuit basics tutorial** in the project list, or open `?project=circuit-basics&schematic=voltage-divider`. Three lessons cover an unloaded divider, a loaded divider, and slow RC charging/discharging. Each follows predict → simulate → build → measure. The lesson panel includes an exact instructional diagram, parts list, build and measurement steps, expandable answers, and troubleshooting. Previous/Next buttons and the Schematic selector choose matching lessons and simulation models.
+
+Tutorials use the optional `tutorial` property in a project's `project.json`: `intro`, `materials`, and `lessons`. Each lesson has a stable `id`, `roadmapNode`, simulation `schematic` ID, `title`, `goal`, `concept`, `diagram`, `diagramAlt`, `transfer`, and string arrays `predict`, `simulate`, `build`, `measure`, `expected`, and `troubleshoot`. Each schematic maps to exactly one lesson. `validate.mjs` checks those fields and their diagram, simulation, and roadmap references. Omit `tutorial` for ordinary engineering projects.
+
+Field notes are scoped to the selected tutorial lesson, independently of the roadmap's recorded current node. The copied handoff includes both contexts and keeps predictions, simulations, and physical measurements distinct. Lesson browsing and simulator edits do not change completion status. The starting-model download is available even if CircuitJS1 has not initialized; the toolbar's Download exports the currently edited simulator model instead.
+
+See [the tutorial overview](projects/circuit-basics/README.md) for materials, expected nominal values, and model limits.
+
+Run `node eworkbench/validate.mjs` and `node eworkbench/tutorial-check.cjs` from the repository root. The second command checks lesson navigation, notes isolation, copied updates, and switching back to the microphone project using a DOM fixture. It does not perform browser layout testing or execute the upstream simulator. Both commands run in the EWorkbench PR workflow.
+
 ## U1 component placeholder
 
 The wireless-mic project includes **U1: a provisional JieLi chip symbol**, a separate 20-contact positional map, and a machine-readable model with every unknown manufacturer pin and function explicitly unassigned. See [the identification notes](projects/wireless-mic/jl-u1-references.md) and [the U1 model](projects/wireless-mic/jl-u1-chip.json).

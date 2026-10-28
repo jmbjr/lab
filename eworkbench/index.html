@@ -70,6 +70,23 @@
       <label for="schematicSelect">Schematic</label>
       <select id="schematicSelect" aria-label="Select schematic"></select>
     </div>
+    <section id="tutorialSection" class="tutorial-section" aria-labelledby="lessonTitle" hidden>
+      <p class="eyebrow">PREDICT → SIMULATE → BUILD → MEASURE</p>
+      <h3 id="lessonTitle" aria-live="polite"></h3>
+      <p id="tutorialIntro" class="muted"></p>
+      <details class="lesson-answer"><summary>Materials and bench setup</summary><ul id="tutorialMaterials"></ul></details>
+      <p id="lessonGoal" class="lesson-goal"></p>
+      <div class="lesson-diagram"><img id="lessonDiagram" alt="" src=""></div>
+      <p class="small muted">Designed teaching circuit. Values and expected readings are model assumptions until you measure your build.</p>
+      <div id="lessonContent"></div>
+      <div class="toolbar" aria-label="Tutorial navigation">
+        <button id="previousLessonBtn" type="button">← Previous lesson</button>
+        <button id="nextLessonBtn" type="button">Next lesson →</button>
+        <a id="lessonSourceLink" download>Download starting circuit .txt</a>
+        <a href="#fieldNotes">Record results ↑</a>
+      </div>
+      <p class="small muted">Browse lessons freely. Each lesson keeps its own browser-local notes. Browsing does not mark roadmap steps complete; share your results to update the tracker.</p>
+    </section>
     <div id="error" role="alert" class="notice error" hidden></div>
     <section id="observed" hidden>
       <div class="section-head"><h3 id="observedTitle">Observed circuit</h3><span class="tag observed-tag">Measured / inferred</span></div>
@@ -95,7 +112,7 @@
       </div>
       <p id="simStatus" class="small muted" role="status">Simulator not loaded.</p>
       <div class="sim-frame-wrap"><iframe id="simFrame" title="CircuitJS1 interactive simulator" loading="lazy" allowfullscreen></iframe></div>
-      <p class="small muted">Edit components directly in CircuitJS1. Browser drafts are stored only in this browser, not committed to GitHub. Download the .txt file to retain or contribute changes. Simulations use assumed parameters and are not measurements of the actual microphone.</p>
+      <p class="small muted">Edit components directly in CircuitJS1. Browser drafts are stored only in this browser, not committed to GitHub. Download the .txt file to retain or contribute changes. Simulations use assumed parameters and are not physical measurements.</p>
     </section>
     <section id="emptyState" class="notice" hidden>No schematics are available for this project yet.</section>
   </main>

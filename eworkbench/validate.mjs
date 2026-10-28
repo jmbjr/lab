@@ -9,6 +9,7 @@ const errors = [];
 for (const entry of catalog.projects) {
   const p = JSON.parse(read(entry.path));
   const dirname = path.dirname(entry.path);
+  let roadmap = null;
   if (p.id !== entry.id) errors.push("Project ID mismatch: " + entry.id);
   const ids = new Set();
   if (p.roadmapData) {
@@ -18,6 +19,7 @@ for (const entry of catalog.projects) {
     } else {
       try {
         const tracker = JSON.parse(fs.readFileSync(roadmapPath, "utf8"));
+        roadmap = tracker;
         const nodeIds = new Set((tracker.nodes || []).map(n => n.id));
         if (tracker.project?.id !== p.projectCode)
           errors.push("Roadmap project code mismatch: " + entry.id);
@@ -36,6 +38,35 @@ for (const entry of catalog.projects) {
       errors.push("Unrecognized schematic recommendation on " + nodeId);
     for (const ref of refs) {
       if (!p.schematics.some(x => x.id === ref)) errors.push("Unknown suggested schematic: " + ref);
+    }
+  }
+  if (p.tutorial) {
+    const lessonIds = new Set();
+    const lessonSchematics = new Set();
+    const nodeIds = new Set((roadmap?.nodes || []).map(n => n.id));
+    const nonemptyStrings = values => Array.isArray(values) && values.length > 0 &&
+      values.every(v => typeof v === "string" && v.trim());
+    if (!nonemptyStrings(p.tutorial.materials)) errors.push("Missing tutorial materials: " + entry.id);
+    if (typeof p.tutorial.intro !== "string" || !p.tutorial.intro.trim())
+      errors.push("Missing tutorial introduction: " + entry.id);
+    if (!Array.isArray(p.tutorial.lessons) || !p.tutorial.lessons.length)
+      errors.push("Empty tutorial: " + entry.id);
+    for (const lesson of p.tutorial.lessons || []) {
+      if (lessonIds.has(lesson.id)) errors.push("Duplicate tutorial lesson: " + lesson.id);
+      lessonIds.add(lesson.id);
+      for (const field of ["id", "title", "goal", "concept", "diagramAlt", "transfer"])
+        if (typeof lesson[field] !== "string" || !lesson[field].trim())
+          errors.push("Missing tutorial " + field + ": " + lesson.id);
+      if (!lesson.diagram || !exists(path.join(dirname, lesson.diagram)))
+        errors.push("Missing tutorial diagram: " + lesson.id);
+      if (!p.schematics.some(s => s.id === lesson.schematic && s.kind === "simulation"))
+        errors.push("Tutorial needs a simulation schematic: " + lesson.id);
+      if (lessonSchematics.has(lesson.schematic))
+        errors.push("Ambiguous tutorial schematic: " + lesson.schematic);
+      lessonSchematics.add(lesson.schematic);
+      if (!nodeIds.has(lesson.roadmapNode)) errors.push("Unknown tutorial roadmap node: " + lesson.id);
+      for (const field of ["predict", "simulate", "build", "measure", "expected", "troubleshoot"])
+        if (!nonemptyStrings(lesson[field])) errors.push("Missing tutorial " + field + ": " + lesson.id);
     }
   }
   for (const s of p.schematics) {

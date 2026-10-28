@@ -6,6 +6,12 @@
       "path": "projects/wireless-mic/project.json",
       "title": "Wireless microphone",
       "summary": "TODO-001 · JieLi AC7006-family input network"
+    },
+    {
+      "id": "circuit-basics",
+      "path": "projects/circuit-basics/project.json",
+      "title": "Circuit basics tutorial",
+      "summary": "TODO-002 · Predict → simulate → build → measure"
     }
   ]
 }

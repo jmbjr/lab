@@ -107,5 +107,18 @@ button:disabled{opacity:.4;cursor:not-allowed}
 @media(max-width:850px){.guide-grid{grid-template-columns:1fr}.roadmap-head{align-items:start;flex-wrap:wrap}.roadmap-progress{flex-direction:column;align-items:stretch;gap:.3rem}.roadmap-progress progress{width:100%;max-width:none}}
 
 .footer{padding:1.5rem 0;color:var(--muted);font-size:.88rem}
+.tutorial-section{padding:1.25rem;border:1px solid #4c9d8b;border-radius:.85rem;background:#112b32}
+.tutorial-section>h3{font-size:1.3rem}
+.lesson-goal{margin-top:1rem;font-weight:650}
+.lesson-diagram{border-radius:.65rem;background:#f5f7fb;padding:.75rem;overflow:auto}
+.lesson-diagram img{display:block;width:100%;min-width:300px;max-height:360px;object-fit:contain}
+.lesson-stage{padding:.1rem 0 .5rem;border-bottom:1px solid var(--line)}
+.lesson-stage h4{color:var(--accent);margin:.8rem 0 .35rem}
+.lesson-stage ol{padding-left:1.4rem;margin:.35rem 0}
+.lesson-answer{margin:.8rem 0;border:1px solid var(--line);border-radius:.5rem;padding:.7rem .9rem}
+.lesson-answer summary{cursor:pointer;font-weight:650}
+.lesson-answer ul{margin-bottom:0}
+.tutorial-section .toolbar{align-items:center}
+.tutorial-section .toolbar a{font-size:.88rem;padding:.4rem}
 [hidden]{display:none!important}
 @media(max-width:850px){.header-row{align-items:start;flex-direction:column}.app-layout{grid-template-columns:1fr}.sidebar{padding:.9rem}.project-list{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.workspace{padding:1rem}.workspace-heading{align-items:start;flex-wrap:wrap}.section-head{flex-wrap:wrap}#simFrame{min-height:550px}}

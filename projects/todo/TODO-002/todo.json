@@ -1,0 +1,141 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "id": "TODO-002",
+    "title": "Circuit basics — simulate, build, and measure",
+    "slug": "circuit-basics",
+    "status": "todo",
+    "phase": "define",
+    "iteration": 1,
+    "objective": "Understand voltage division, load effects, and RC timing by comparing predictions, ideal simulations, and a separate low-voltage breadboard build.",
+    "created_at": "2026-10-27",
+    "updated_at": "2026-10-27",
+    "current_node_ids": [
+      "STEP-001"
+    ],
+    "entry_node_ids": [
+      "STEP-001"
+    ],
+    "terminal_node_ids": [
+      "STEP-005"
+    ],
+    "iteration_exit_criteria": [
+      "Voltage-divider and loading predictions are checked against physical readings.",
+      "An RC charge/discharge curve is measured and its approximate time constant explained.",
+      "Predicted, simulated, and measured evidence remain distinguishable.",
+      "Any unavailable physical work is recorded as pending or blocked, not passed by simulation alone."
+    ],
+    "out_of_scope_for_iteration": [
+      "Microphone or speaker modification",
+      "RF protocol decoding",
+      "Mains-powered or Li-ion charging circuits",
+      "Automatic GitHub writes or automatic completion of bench milestones"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "STEP-001",
+      "kind": "step",
+      "title": "Prepare the bench and prediction log",
+      "status": "ready",
+      "summary": "Gather parts, identify breadboard connections and meter sockets, and open the first lesson. No physical measurements have been recorded yet.",
+      "acceptance_criteria": [
+        "A separate approximately 3 V breadboard setup is available, or missing parts are explicitly listed.",
+        "Meter voltage versus resistance modes and capacitor polarity are understood.",
+        "Predicted, simulated and measured values have separate headings in the notes."
+      ],
+      "outputs": [
+        "Bench setup and parts checklist; open questions"
+      ],
+      "upstream": [],
+      "downstream": [
+        "STEP-002"
+      ]
+    },
+    {
+      "id": "STEP-002",
+      "kind": "step",
+      "title": "Voltage, resistance, and a divider",
+      "status": "pending",
+      "summary": "Explain why two equal series resistors produce half the supply voltage, then check a real build.",
+      "acceptance_criteria": [
+        "Prediction recorded before revealing ideal answers.",
+        "Baseline and at least one variation checked in simulation.",
+        "Physical circuit built and readings recorded with probe nodes, units, and power state.",
+        "Differences between prediction, simulation, and measurement explained or left as specific open questions."
+      ],
+      "outputs": [
+        "LESSON-001 field notes with prediction, simulation, and measured evidence"
+      ],
+      "upstream": [
+        "STEP-001"
+      ],
+      "downstream": [
+        "STEP-003"
+      ]
+    },
+    {
+      "id": "STEP-003",
+      "kind": "step",
+      "title": "A measurement or load changes the circuit",
+      "status": "pending",
+      "summary": "Predict how a connected load pulls down the divider output, then measure the change.",
+      "acceptance_criteria": [
+        "Prediction recorded before revealing ideal answers.",
+        "Baseline and at least one variation checked in simulation.",
+        "Physical circuit built and readings recorded with probe nodes, units, and power state.",
+        "Differences between prediction, simulation, and measurement explained or left as specific open questions."
+      ],
+      "outputs": [
+        "LESSON-002 field notes with prediction, simulation, and measured evidence"
+      ],
+      "upstream": [
+        "STEP-002"
+      ],
+      "downstream": [
+        "STEP-004"
+      ]
+    },
+    {
+      "id": "STEP-004",
+      "kind": "step",
+      "title": "Capacitors take time: the RC response",
+      "status": "pending",
+      "summary": "Measure a slow capacitor charge and discharge, and relate the shape to the time constant R × C.",
+      "acceptance_criteria": [
+        "Prediction recorded before revealing ideal answers.",
+        "Baseline and at least one variation checked in simulation.",
+        "Physical circuit built and readings recorded with probe nodes, units, and power state.",
+        "Differences between prediction, simulation, and measurement explained or left as specific open questions."
+      ],
+      "outputs": [
+        "LESSON-003 field notes with prediction, simulation, and measured evidence"
+      ],
+      "upstream": [
+        "STEP-003"
+      ],
+      "downstream": [
+        "STEP-005"
+      ]
+    },
+    {
+      "id": "STEP-005",
+      "kind": "step",
+      "title": "Review and apply the lessons",
+      "status": "pending",
+      "summary": "Explain reference nodes, loading, and RC timing in your own words. Relate them to future microphone tracing without assigning unverified microphone component values or functions.",
+      "acceptance_criteria": [
+        "All three lessons have physical evidence or a clearly recorded blocker.",
+        "Ground reference, loading, and time constant can each be explained using a measured example.",
+        "Remaining questions and a next exercise are recorded; incomplete physical work is not marked complete."
+      ],
+      "outputs": [
+        "Tutorial summary and next learning goal"
+      ],
+      "upstream": [
+        "STEP-004"
+      ],
+      "downstream": []
+    }
+  ]
+}
