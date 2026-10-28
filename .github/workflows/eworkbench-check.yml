@@ -22,6 +22,7 @@ jobs:
         run: |
           node --check eworkbench/app.js
           node eworkbench/validate.mjs
+          node eworkbench/tutorial-check.cjs
       - name: Checkout upstream simulator
         uses: actions/checkout@v4
         with:

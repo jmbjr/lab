@@ -4,7 +4,7 @@ const root = new URL("./", document.baseURI);
 const $ = id => document.getElementById(id);
 const state = {
   catalog: [], project: null, schematic: null, simulator: null,
-  repositoryModel: "", token: 0, roadmap: null, currentRoadmapNodes: []
+  repositoryModel: "", token: 0, roadmap: null, currentRoadmapNodes: [], lesson: null
 };
 const controls = ["runBtn", "saveBtn", "exportBtn", "importBtn", "resetBtn"];
 
@@ -55,12 +55,14 @@ function element(tag, className = "", textValue = null) {
 
 function fieldNotesKey() {
   const project = state.project?.projectCode || state.project?.id || "none";
-  const steps = state.currentRoadmapNodes.map(n => n.id).join("_") || "general";
+  const steps = state.lesson?.id || state.currentRoadmapNodes.map(n => n.id).join("_") || "general";
   return "jmbjr.eworkbench.fieldNotes.v1." + project + "." + steps;
 }
 function restoreFieldNotes() {
   $("fieldNotesLabel").textContent = "Field notes for " +
-    (state.currentRoadmapNodes.map(n => n.id).join(", ") || "this project");
+    (state.lesson ? state.lesson.id + " · " + state.lesson.title :
+      state.currentRoadmapNodes.map(n => n.id).join(", ") || "this project");
+  $("manualCopyText").hidden = true;
   try {
     $("fieldNotes").value = localStorage.getItem(fieldNotesKey()) || "";
     $("fieldNotesStatus").textContent = "Notes stay in this browser until you paste them into chat.";
@@ -68,6 +70,48 @@ function restoreFieldNotes() {
     $("fieldNotes").value = "";
     $("fieldNotesStatus").textContent = "Browser storage unavailable; copy notes before leaving.";
   }
+}
+
+function renderTutorial() {
+  const tutorial = state.project.tutorial;
+  const lessons = tutorial?.lessons || [];
+  const index = lessons.findIndex(l => l.schematic === state.schematic?.id);
+  state.lesson = lessons[index] || null;
+  $("tutorialSection").hidden = !state.lesson;
+  if (!state.lesson) return;
+  const lesson = state.lesson;
+  $("tutorialIntro").textContent = tutorial.intro;
+  $("tutorialMaterials").replaceChildren(...tutorial.materials.map(v => element("li", "", v)));
+  $("lessonTitle").textContent = (index + 1) + " / " + lessons.length + " · " + lesson.title;
+  $("lessonGoal").textContent = lesson.goal;
+  const image = $("lessonDiagram");
+  image.src = new URL(lesson.diagram, pathForProject(state.project.id)).href;
+  image.alt = lesson.diagramAlt;
+  const content = $("lessonContent");
+  content.replaceChildren();
+  content.append(element("p", "", lesson.concept));
+  for (const [key, title] of [["predict", "1 · Predict"], ["simulate", "2 · Simulate"],
+    ["build", "3 · Build"], ["measure", "4 · Measure and explain"]]) {
+    const part = element("section", "lesson-stage");
+    part.append(element("h4", "", title));
+    const list = element("ol");
+    lesson[key].forEach(v => list.append(element("li", "", v)));
+    part.append(list); content.append(part);
+  }
+  for (const [key, title] of [["expected", "Reveal expected results"],
+    ["troubleshoot", "If your readings disagree"]]) {
+    const details = element("details", "lesson-answer");
+    details.append(element("summary", "", title));
+    const list = element("ul");
+    lesson[key].forEach(v => list.append(element("li", "", v)));
+    details.append(list); content.append(details);
+  }
+  content.append(element("p", "notice", lesson.transfer));
+  $("previousLessonBtn").disabled = index <= 0;
+  $("nextLessonBtn").disabled = index >= lessons.length - 1;
+  const model = $("lessonSourceLink");
+  model.href = new URL(state.schematic.source, pathForProject(state.project.id)).href;
+  model.download = state.schematic.source;
 }
 function renderRoadmap(data) {
   state.roadmap = data;
@@ -188,13 +232,19 @@ function handoffMessage() {
       active.map(n => n.id + " — " + n.title + " (" + n.status + ")").join("; ") :
       "No current step"),
     "Schematic: " + (schematic ? schematic.title + " [" + schematic.id + "]" : "none"),
+    ...(state.lesson ? ["Tutorial lesson: " + state.lesson.id + " — " + state.lesson.title,
+      "Lesson roadmap node: " + state.lesson.roadmapNode,
+      "Predicted: ... | Simulated: ... | Measured: ... (keep these separate)"] : []),
     "Workbench link: " + link,
     "",
     "New findings / measurements:",
     notes || "(Add readings, probe points, power state, and uncertainties here.)",
     "",
-    "Please reconcile these findings with the existing measured netlist and roadmap,",
-    "distinguish observed continuity from hypotheses, and propose the next bench test.",
+    ...(state.lesson ? [
+      "Please compare my prediction, simulation and physical measurements; explain discrepancies",
+      "and propose the next learning step. Expected results are not measured evidence."
+    ] : ["Please reconcile these findings with the existing measured netlist and roadmap,",
+      "distinguish observed continuity from hypotheses, and propose the next bench test."]),
     "For GitHub changes, open a PR; I will review/merge it. Photos/files will be attached separately."
   ].join("\n");
 }
@@ -223,6 +273,9 @@ async function selectProject(id, requestedSchematic = null) {
   if (!item) throw new Error("Project not found: " + id);
   state.project = await fetchChecked(new URL(item.path, root));
   state.project.id = id;
+  state.lesson = null;
+  state.currentRoadmapNodes = [];
+  $("tutorialSection").hidden = true;
   $("projectTitle").textContent = state.project.title;
   $("projectBadge").textContent = state.project.projectCode || "PROJECT";
   $("projectDescription").textContent = state.project.description || "";
@@ -355,6 +408,8 @@ async function selectSchematic(id) {
   const entry = (state.project.schematics || []).find(s => s.id === id);
   if (!entry) throw new Error("Unknown schematic: " + id);
   state.schematic = entry; state.simulator = null;
+  renderTutorial();
+  if (state.project.tutorial) restoreFieldNotes();
   const token = ++state.token;
   $("schematicSelect").value = id;
   linkSelection();
@@ -400,7 +455,7 @@ $("copyUpdateBtn").addEventListener("click", async () => {
 });
 $("clearFieldNotesBtn").addEventListener("click", () => {
   if (!$("fieldNotes").value) return;
-  if (!window.confirm("Clear the locally saved field notes for this roadmap step?")) return;
+  if (!window.confirm("Clear the locally saved field notes for this step or lesson?")) return;
   $("fieldNotes").value = "";
   $("manualCopyText").hidden = true;
   try { localStorage.removeItem(fieldNotesKey()); } catch {}
@@ -408,6 +463,14 @@ $("clearFieldNotesBtn").addEventListener("click", () => {
 });
 
 $("schematicSelect").addEventListener("change", e => selectSchematic(e.target.value).catch(showError));
+for (const [id, direction] of [["previousLessonBtn", -1], ["nextLessonBtn", 1]]) {
+  $(id).addEventListener("click", () => {
+    const lessons = state.project?.tutorial?.lessons || [];
+    const index = lessons.findIndex(l => l.id === state.lesson?.id);
+    const next = index < 0 ? null : lessons[index + direction];
+    if (next) selectSchematic(next.schematic).catch(showError);
+  });
+}
 $("runBtn").addEventListener("click", () => {
   if (!state.simulator) return;
   state.simulator.setSimRunning(!state.simulator.isRunning());

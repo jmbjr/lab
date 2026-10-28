@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" role="img" aria-labelledby="title desc">
+<title id="title">03 · RC charge and discharge</title><desc id="desc">Designed teaching circuit; nominal values are not hardware measurements.</desc>
+<rect width="720" height="340" rx="12" fill="#f5f7fb"/>
+<style>text{font:16px system-ui,sans-serif;fill:#182b42}.heading{font-size:21px;font-weight:700}.note{font-size:13px;fill:#506176}.wire{fill:none;stroke:#234258;stroke-width:3;stroke-linejoin:round}.node{fill:#167d74}</style>
+<text x="24" y="32" class="heading">03 · RC charge and discharge</text>
+<path class="wire" d="M100 140H224 M280 140H430V206 M430 224V280H100V240"/>
+<circle cx="100" cy="212" r="28" fill="none" stroke="#234258" stroke-width="3"/><path class="wire" d="M100 184V140"/>
+<text x="94" y="204">+</text><text x="94" y="230">−</text>
+<text x="25" y="97">Input: 0 or 3 V</text><text x="25" y="116" class="note">Sim: square wave</text>
+<rect x="224" y="127" width="56" height="26" fill="none" stroke="#234258" stroke-width="3"/>
+<text x="218" y="111">R · 10 kΩ</text>
+<path class="wire" d="M407 206H453 M407 224H453 M430 140H544"/>
+<circle class="node" cx="430" cy="140" r="5"/>
+<text x="534" y="123">VC / red probe</text><text x="469" y="212">C · 1000 µF</text><text x="469" y="238" class="note">Build: + at VC, − at GND</text>
+<text x="388" y="194">+</text><text x="388" y="244">−</text>
+<path class="wire" d="M100 280V290 M84 290H116 M90 296H110"/><text x="137" y="305">GND</text>
+<text x="258" y="76" class="note">Build: move R input from +3 V to GND for discharge</text>
+
+<text x="24" y="320" class="note">DESIGNED CIRCUIT · Nominal model values · Black meter probe at GND</text></svg>

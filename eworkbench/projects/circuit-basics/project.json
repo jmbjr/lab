@@ -1,0 +1,204 @@
+{
+  "schema_version": "1.0",
+  "id": "circuit-basics",
+  "projectCode": "TODO-002",
+  "title": "Circuit basics — simulate, build, and measure",
+  "description": "Three hands-on lessons: voltage dividers, loading, and RC timing. Predict first, simulate an ideal circuit, then compare with a separate 3 V breadboard build.",
+  "roadmap": "https://github.com/jmbjr/lab/blob/main/projects/todo/TODO-002/todo.json",
+  "roadmapData": "../projects/todo/TODO-002/todo.json",
+  "schematics": [
+    {
+      "id": "voltage-divider",
+      "title": "Lesson 1 · Voltage divider",
+      "kind": "simulation",
+      "source": "voltage-divider.txt",
+      "description": "An ideal 3 V supply and two 1 kΩ series resistors. Inspect VOUT relative to GND.",
+      "assumptions": [
+        "Ideal 3.0 V DC supply",
+        "R1 = R2 = 1 kΩ, exact values",
+        "No external output load; ideal voltage probe",
+        "Teaching design, not measured hardware"
+      ]
+    },
+    {
+      "id": "loaded-divider",
+      "title": "Lesson 2 · Loaded divider",
+      "kind": "simulation",
+      "source": "loaded-divider.txt",
+      "description": "The same divider with a 1 kΩ load from VOUT to GND. Compare with Lesson 1.",
+      "assumptions": [
+        "Ideal 3.0 V DC supply",
+        "R1 = R2 = RL = 1 kΩ, exact values",
+        "RL is in parallel with R2",
+        "Teaching design, not measured hardware"
+      ]
+    },
+    {
+      "id": "rc-charge",
+      "title": "Lesson 3 · RC charge and discharge",
+      "kind": "simulation",
+      "source": "rc-charge.txt",
+      "description": "A slow 0–3 V square-wave source, 10 kΩ resistor, and 1000 µF capacitor. Time constant: 10 s.",
+      "assumptions": [
+        "Ideal square wave: 0–3 V, 0.005 Hz, 50% duty cycle",
+        "R = 10 kΩ; C = 1000 µF; initial capacitor voltage = 0 V",
+        "No leakage, ESR, tolerance, or meter loading",
+        "Physical build uses manual input changes instead of a signal generator"
+      ]
+    }
+  ],
+  "benchGuides": {
+    "STEP-001": [
+      "Gather a breadboard, multimeter, switched two-AA holder, resistors and capacitor; expand Materials and bench setup in the tutorial.",
+      "Begin in simulation if parts are missing. Keep physical build and measurement milestones pending until actually performed.",
+      "Use the lesson navigation or Schematic selector below to browse. Field notes are separate for each lesson; repository roadmap progress changes only after a reviewed update."
+    ]
+  },
+  "benchSchematicRefs": {
+    "STEP-001": [
+      "voltage-divider"
+    ],
+    "STEP-002": [
+      "voltage-divider"
+    ],
+    "STEP-003": [
+      "loaded-divider"
+    ],
+    "STEP-004": [
+      "rc-charge"
+    ]
+  },
+  "tutorial": {
+    "intro": "A self-paced bench tutorial. Write a prediction before revealing answers. Keep predicted, simulated, and physically measured values separate; share each lesson’s results through Field notes.",
+    "materials": [
+      "Breadboard, jumper wires, digital multimeter, and a switched two-AA holder with two AA cells (about 3 V). Power is needed only for physical exercises.",
+      "Three 1 kΩ resistors, one 10 kΩ timing resistor, and another 10 kΩ resistor for initial capacitor discharge. Ordinary ¼ W parts are sufficient. Optional 2 kΩ and extra 10 kΩ resistors support variations.",
+      "One 1000 µF electrolytic capacitor rated at least 6.3 V, plus a timer. Check polarity. Other RC values work if you recalculate R × C and choose a timing interval you can measure.",
+      "Build these circuits separately from the microphone and speaker. Disconnect the supply before rewiring; use resistance/continuity mode only on unpowered, discharged circuits.",
+      "Voltage measurements use COM and V/Ω sockets, with the meter across two nodes. Current is inferred in these lessons. Never put a meter in current mode directly across a supply."
+    ],
+    "lessons": [
+      {
+        "id": "LESSON-001",
+        "roadmapNode": "STEP-002",
+        "schematic": "voltage-divider",
+        "title": "Voltage, resistance, and a divider",
+        "goal": "Explain why two equal series resistors produce half the supply voltage, then check a real build.",
+        "diagram": "voltage-divider.svg",
+        "diagramAlt": "Three-volt supply feeds R1, 1 kilohm, into VOUT; R2, 1 kilohm, connects VOUT to ground. Measure VOUT relative to ground.",
+        "concept": "Voltage is a difference between two nodes. Current is charge flow through a branch. Resistance relates them: V = I × R. Here R1 and R2 are in series, so the same current flows through both. VOUT is measured relative to GND, the battery negative terminal; GND does not mean earth ground.",
+        "predict": [
+          "Before opening the answer, calculate total resistance, battery current, and VOUT for VIN = 3.0 V, R1 = 1 kΩ, R2 = 1 kΩ. Use I = VIN / (R1 + R2), then VOUT = I × R2.",
+          "Predict VOUT if R2 becomes 2 kΩ while R1 stays 1 kΩ. Write both predictions in Field notes."
+        ],
+        "simulate": [
+          "The matching CircuitJS1 model is below this lesson. It starts paused. Press Run, then hover over each resistor and the VOUT probe to inspect voltage and current.",
+          "Double-click R2 (the lower resistor) and change its resistance to 2000 Ω. Compare with your prediction. Restore it to 1000 Ω for the physical baseline.",
+          "Save browser draft keeps edits locally. Reset to repository version restores the starting model. The separate starting-circuit download works even before the simulator loads."
+        ],
+        "build": [
+          "Use a breadboard and a switched two-AA holder, about 3 V. Disconnect the holder before wiring. Identify breadboard connected groups and any split power rails with the meter in continuity mode while unpowered.",
+          "With resistors separate from the circuit, measure R1 and R2 in resistance mode and record their actual values. Then connect battery + → R1 → VOUT → R2 → battery −. The junction must be a separate breadboard node from both supply rails.",
+          "Put the black meter lead in COM and red in V/Ω. Select DC volts before connecting power. This lesson infers current from voltage and resistance; leave the current-input socket unused."
+        ],
+        "measure": [
+          "Power the circuit. Keep the black probe at battery − / GND. Measure VIN at battery +, then VOUT at the R1/R2 junction. Write the node pair, meter mode, and units with each reading.",
+          "Recalculate VOUT = measured VIN × measured R2 / (measured R1 + measured R2). Compare that prediction with the measured voltage and the ideal simulation.",
+          "Infer series current from (VIN − VOUT) / R1 and independently from VOUT / R2. Explain why the two estimates should be close. Disconnect power when finished."
+        ],
+        "expected": [
+          "Ideal baseline: total resistance 2 kΩ, current 1.5 mA, VOUT 1.5 V. Each resistor dissipates 2.25 mW.",
+          "With R2 = 2 kΩ: total resistance 3 kΩ, current 1.0 mA, VOUT 2.0 V. A divider sets a ratio; it is not a fixed-voltage regulator.",
+          "Your AA voltage and resistor values will differ from the nominal model. A voltmeter also loads the circuit slightly. Treat this list as predictions, not completed measurements."
+        ],
+        "troubleshoot": [
+          "VOUT near VIN or 0 V: disconnect power and check whether the junction shares a breadboard strip with a rail, or one resistor is not connected.",
+          "Unexpected ratio: measure resistors separately with power disconnected. In-circuit resistance includes other paths and is not necessarily the part value.",
+          "Negative voltage: check which node has the black probe. The sign depends on probe order."
+        ],
+        "transfer": "Connection to the microphone project: a node name or connector polarity label does not tell you its voltage relative to ground. Record the reference node explicitly."
+      },
+      {
+        "id": "LESSON-002",
+        "roadmapNode": "STEP-003",
+        "schematic": "loaded-divider",
+        "title": "A measurement or load changes the circuit",
+        "goal": "Predict how a connected load pulls down the divider output, then measure the change.",
+        "diagram": "loaded-divider.svg",
+        "diagramAlt": "Three-volt supply feeds R1, 1 kilohm, into VOUT. R2 and load RL, each 1 kilohm, both connect VOUT to ground in parallel.",
+        "concept": "The load RL shares both endpoints with R2, so they are in parallel. Their equivalent resistance is Rbottom = (R2 × RL) / (R2 + RL). The divider becomes VOUT = VIN × Rbottom / (R1 + Rbottom). Connecting another device can change the signal you intended to observe.",
+        "predict": [
+          "Use R1 = R2 = RL = 1 kΩ and VIN = 3.0 V. Calculate Rbottom, VOUT, current through R1, and current through each lower branch.",
+          "Predict whether a 10 kΩ load disturbs the original 1.5 V output more or less than a 1 kΩ load."
+        ],
+        "simulate": [
+          "Run the loaded-divider model below. R1 is the upper resistor, R2 the lower center resistor, and RL the resistor to the right. Inspect the VOUT probe and compare branch currents.",
+          "Change RL from 1000 Ω to 10000 Ω, then 1000000 Ω. Observe how VOUT approaches the unloaded value as load resistance increases.",
+          "Restore RL = 1000 Ω before comparing the nominal model with your first physical load test."
+        ],
+        "build": [
+          "Rebuild or retain the first lesson’s 1 kΩ / 1 kΩ divider. Disconnect power before adding the load.",
+          "Measure a third 1 kΩ resistor separately, then connect it from VOUT to GND. Both R2 and RL must share the same two nodes; do not insert RL in series with R2.",
+          "Keep meter leads in COM and V/Ω and select DC volts. You only need voltage and separate, unpowered resistance measurements."
+        ],
+        "measure": [
+          "Measure VIN and VOUT with RL installed. Disconnect power, remove RL, reconnect power, and measure VIN and VOUT again. Record both conditions.",
+          "Use actual resistance readings to predict loaded VOUT. Infer IR1 = (VIN − VOUT) / R1, IR2 = VOUT / R2, and IRL = VOUT / RL. Check that IR1 approximately equals IR2 + IRL.",
+          "If you have a 10 kΩ resistor, repeat with that load and compare. Explain why a signal can appear correct until another device is connected. Disconnect power afterward."
+        ],
+        "expected": [
+          "With a 1 kΩ load: Rbottom = 500 Ω; VOUT = 1.0 V; IR1 = 2.0 mA; IR2 = IRL = 1.0 mA.",
+          "With a 10 kΩ load: Rbottom ≈ 909 Ω and VOUT ≈ 1.429 V. With a 1 MΩ load: VOUT ≈ 1.499 V.",
+          "A typical high-input-resistance voltmeter is a much lighter load than 1 kΩ; check your meter’s specification rather than assuming its input resistance."
+        ],
+        "troubleshoot": [
+          "VOUT increases after adding the load: check whether you accidentally changed the series path instead of connecting RL in parallel.",
+          "No visible change: verify RL is actually connected to both VOUT and GND, and that it is 1 kΩ rather than 1 MΩ.",
+          "Different supply readings between tests: use each test’s measured VIN in its own prediction."
+        ],
+        "transfer": "Connection to the microphone project: an audio tap and an AUX input are electrical loads. We must characterize the source and plan buffering or conditioning before connecting them."
+      },
+      {
+        "id": "LESSON-003",
+        "roadmapNode": "STEP-004",
+        "schematic": "rc-charge",
+        "title": "Capacitors take time: the RC response",
+        "goal": "Measure a slow capacitor charge and discharge, and relate the shape to the time constant R × C.",
+        "diagram": "rc-charge.svg",
+        "diagramAlt": "An input switching between zero and three volts feeds a 10-kilohm resistor into VC. A 1000-microfarad capacitor connects VC to ground with positive terminal at VC.",
+        "concept": "A capacitor stores charge, Q = C × V. Charging current falls as its voltage approaches the supply. For an initially discharged capacitor and an ideal step to VIN, VC(t) = VIN × (1 − exp(−t/τ)), where τ = R × C. This circuit is a low-pass example: its output cannot follow fast input changes immediately.",
+        "predict": [
+          "For R = 10 kΩ and C = 1000 µF, calculate τ. Predict VC after one, three, and five time constants with a 3.0 V input.",
+          "Predict what doubling R or C does to charging time. Predict the final voltage if the ideal input stays at 3.0 V."
+        ],
+        "simulate": [
+          "The model below uses a square-wave input from 0 to 3 V at 0.005 Hz: 100 simulated seconds high, then 100 low. It uses a 10 kΩ resistor and an ideal 1000 µF capacitor, initially at 0 V.",
+          "Press Run and observe capacitor voltage in the scope. Use the simulator’s displayed time, not wall-clock time. The VC probe also shows node voltage. The falling input discharges the capacitor through the same resistor.",
+          "Change R to 20000 Ω and compare curve timing. Reset to repository version to return to the original values and initial condition. The ideal capacitor has no leakage, tolerance, or polarity failure model."
+        ],
+        "build": [
+          "Disconnect the two-AA supply. Use R = 10 kΩ and C = 1000 µF, rated at least 6.3 V. Measure the resistor separately first. Read the capacitor marking; if a different capacitance is used, recalculate τ before testing.",
+          "Connect R from the input wire to VC. Connect capacitor + to VC and capacitor − to GND. An electrolytic’s stripe usually marks −; verify its markings. Battery − goes to GND. Leave the R input wire disconnected initially.",
+          "With the supply disconnected, place a separate 10 kΩ resistor across the capacitor for at least five time constants, then verify VC is below about 0.05 V in DC-voltage mode. Remove that discharge resistor before charging."
+        ],
+        "measure": [
+          "Place the voltmeter across the capacitor: red at VC, black at GND. Measure and record the supply voltage first. Connect the R input wire to battery + and start a timer. Record VC near 10, 30, and 50 seconds, including actual elapsed times.",
+          "For discharge, disconnect the R input wire from battery + first, then connect that same wire to GND. Never connect battery + directly to GND. The capacitor now discharges through R. Record VC near 10, 30, and 50 seconds after this change.",
+          "Compare the measured curve with the ideal prediction using actual VIN and R. Roughly estimate τ as the charge time to 63% of VIN or the discharge time to 37% of its starting voltage. Account for capacitor tolerance, leakage, meter loading, and sampling delay.",
+          "Finish with the supply disconnected, discharge through the resistor, and check the remaining voltage. If no suitable capacitor is available, complete the simulation and leave the physical measurement explicitly pending."
+        ],
+        "expected": [
+          "τ = 10000 Ω × 0.001 F = 10 s. At 10 s: VC ≈ 1.90 V; at 30 s: ≈ 2.85 V; at 50 s: ≈ 2.98 V for a 3.0 V step from zero.",
+          "For discharge starting at exactly 3.0 V, VC(t) = 3.0 × exp(−t/10 s): about 1.10 V at 10 s, 0.149 V at 30 s, and 0.020 V at 50 s. Scale these by your actual starting voltage.",
+          "Doubling R or C doubles τ. The ideal steady-state charge voltage stays at VIN. Real capacitor leakage and meter input resistance can lower the final measured value."
+        ],
+        "troubleshoot": [
+          "Charging appears instantaneous: check the capacitance unit (1000 µF = 0.001 F), resistor value, and whether the resistor was bypassed by a shared breadboard strip.",
+          "Voltage stays near zero: disconnect power and verify the discharge resistor was removed, the input reaches R, and VC is not on the ground strip.",
+          "Voltage settles low or timing differs: verify polarity with power removed; measure actual VIN and R; consider capacitor tolerance, leakage, and the meter’s finite input resistance. Do not relabel an unexplained result as a confirmed component value."
+        ],
+        "transfer": "Connection to the microphone project: this teaches RC behavior, but it is not a model of the microphone front end. A series coupling capacitor is a different topology and needs its own source, load, and bias analysis."
+      }
+    ]
+  }
+}
